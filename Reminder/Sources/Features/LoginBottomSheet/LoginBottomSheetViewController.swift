@@ -8,12 +8,16 @@
 import Foundation
 import UIKit
 
+//MARK: View Controller
 class LoginBottomSheetViewController: UIViewController {
   let loginView = LoginBottomSheetView()
+  let viewModel = LoginBottomSheetViewModel()
   var handleAreaHeight: CGFloat = 50.0
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    loginView.delegate = self
     setupUI()
     setupGesture()
   }
@@ -32,7 +36,8 @@ class LoginBottomSheetViewController: UIViewController {
       loginView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
     ])
     
-    let heightConstraint = loginView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.5).isActive = true
+//    let heightConstraint: () = loginView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.5).isActive = true
+      loginView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.5).isActive = true
   }
   
   private func setupGesture() {
@@ -52,5 +57,12 @@ class LoginBottomSheetViewController: UIViewController {
     }) { _ in
       completion?()
     }
+  }
+}
+
+//MARK: Delegate
+extension LoginBottomSheetViewController: LoginBottomSheetViewDelegate {
+  func sendLoginData(user: String, password: String) {
+    viewModel.doAuth(usernameLogin: user, password: password)
   }
 }
