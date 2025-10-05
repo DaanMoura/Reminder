@@ -18,15 +18,28 @@ class HomeView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
   
-//  private let profileBackground: UIView = {
-//    let view = UIView()
-//    view.b
-//  }()
+  private let profileBackground: UIView = {
+    let view = UIView()
+    view.backgroundColor = Colors.gray600
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
+  
+  private let contentBackground: UIView = {
+    let view = UIView()
+    view.layer.cornerRadius = Metrics.medium
+    view.layer.masksToBounds = true
+    view.backgroundColor = Colors.gray800
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
   
   private let profileImage: UIImageView = {
     let image = UIImageView()
     image.image = UIImage(systemName: "person.fill")
     image.contentMode = .scaleAspectFit
+    image.clipsToBounds = true
+    image.layer.cornerRadius = Metrics.huge
     image.translatesAutoresizingMaskIntoConstraints = false
     return image
   }()
@@ -38,17 +51,19 @@ class HomeView: UIView {
     button.configuration?.baseForegroundColor = Colors.primaryRedBase
     button.configuration?.contentInsets = NSDirectionalEdgeInsets(top: Metrics.small, leading: Metrics.medium, bottom: Metrics.small, trailing: Metrics.medium)
     button.configuration?.buttonSize = .medium
-    button.configuration?.imagePadding = 24.0
+    button.configuration?.imagePadding = Metrics.iconButtonPadding
     button.setImage(UIImage(systemName: "rectangle.portrait.and.arrow.right"),
                     for: .normal)
+    button.configuration?.preferredSymbolConfigurationForImage = .init(pointSize: Metrics.buttonIconSize, weight: .heavy)
     button.translatesAutoresizingMaskIntoConstraints = false
     return button
   }()
   
   private let welcomeLabel: UILabel = {
     let label = UILabel()
-    label.text = "Boas vindas"
-    label.font = Typography.label
+    label.text = "home.welcome.label".localized
+    label.font = Typography.input
+    label.textColor = Colors.gray200
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
@@ -56,56 +71,84 @@ class HomeView: UIView {
   private let nameLabel: UILabel = {
     let label = UILabel()
     label.text = "Daniel Moura"
+    label.textColor = Colors.gray100
     label.font = Typography.heading
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
   
-  private let rateButton: UIButton = {
+  private let feedbackButton: UIButton = {
     let button = UIButton(type: .system)
-    button.setImage(UIImage(systemName: "star.fill"), for: .normal)
-    button.setTitle("Avaliar", for: .normal)
-    button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+    let buttonImage = UIImage(systemName: "star")
+    button.setImage(buttonImage, for: .normal)
+    button.setTitle("home.feedback.button.title".localized, for: .normal)
     button.layer.cornerRadius = Metrics.medium
-    button.titleLabel?.font = Typography.subheading
-    button.tintColor = .black
+    button.tintColor = Colors.gray100
     button.configuration = .prominentGlass()
+    button.configuration?.imagePadding = Metrics.little
+    
+    button.configuration?.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
+        var outgoing = incoming
+        outgoing.font = Typography.subheading
+        return outgoing
+    }
+
+    button.configuration?.preferredSymbolConfigurationForImage = .init(pointSize: Metrics.buttonIconSize, weight: .heavy)
     button.translatesAutoresizingMaskIntoConstraints = false
     return button
   }()
-
+  
   private func setupUI() {
-    self.backgroundColor = Colors.background
+    self.backgroundColor = Colors.gray600
     
-    addSubview(profileImage)
-    addSubview(logoutIconButton)
-    addSubview(welcomeLabel)
-    addSubview(nameLabel)
-    addSubview(rateButton)
+    addSubview(profileBackground)
+    
+    profileBackground.addSubview(profileImage)
+    profileBackground.addSubview(logoutIconButton)
+    profileBackground.addSubview(welcomeLabel)
+    profileBackground.addSubview(nameLabel)
+    
+    addSubview(contentBackground)
+    
+    contentBackground.addSubview(feedbackButton)
     
     setupConstraints()
   }
   
   private func setupConstraints() {
     NSLayoutConstraint.activate([
-      profileImage.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: Metrics.small),
-      profileImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
-      profileImage.widthAnchor.constraint(equalToConstant: 64),
-      profileImage.heightAnchor.constraint(equalToConstant: 64),
+      //MARK: - Profile background constrainsts
       
-      logoutIconButton.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: Metrics.small),
-      logoutIconButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
+      profileBackground.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+      profileBackground.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+      profileBackground.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+      profileBackground.heightAnchor.constraint(equalToConstant: Metrics.backgroundProfileSize),
+        
+      profileImage.topAnchor.constraint(equalTo: profileBackground.topAnchor, constant: Metrics.small),
+      profileImage.leadingAnchor.constraint(equalTo: profileBackground.leadingAnchor, constant: Metrics.large),
+      profileImage.widthAnchor.constraint(equalToConstant: Metrics.profileImageSize),
+      profileImage.heightAnchor.constraint(equalToConstant: Metrics.profileImageSize),
+      
+      logoutIconButton.topAnchor.constraint(equalTo: profileBackground.topAnchor, constant: Metrics.small),
+      logoutIconButton.trailingAnchor.constraint(equalTo: profileBackground.trailingAnchor, constant: -Metrics.large),
       
       welcomeLabel.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: Metrics.medium),
-      welcomeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
+      welcomeLabel.leadingAnchor.constraint(equalTo: profileBackground.leadingAnchor, constant: Metrics.large),
       
       nameLabel.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: Metrics.small),
-      nameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
+      nameLabel.leadingAnchor.constraint(equalTo: profileBackground.leadingAnchor, constant: Metrics.large),
       
-      rateButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
-      rateButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
-      rateButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -Metrics.tiny),
-      rateButton.heightAnchor.constraint(equalToConstant: Metrics.buttonHeight)
+      //MARK: - Content background constraints
+      
+      contentBackground.topAnchor.constraint(equalTo: profileBackground.bottomAnchor),
+      contentBackground.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+      contentBackground.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+      contentBackground.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+
+      feedbackButton.leadingAnchor.constraint(equalTo: contentBackground.leadingAnchor, constant: Metrics.large),
+      feedbackButton.trailingAnchor.constraint(equalTo: contentBackground.trailingAnchor, constant: -Metrics.large),
+      feedbackButton.bottomAnchor.constraint(equalTo: contentBackground.safeAreaLayoutGuide.bottomAnchor, constant: -Metrics.tiny),
+      feedbackButton.heightAnchor.constraint(equalToConstant: Metrics.buttonHeight)
 
     ])
   }

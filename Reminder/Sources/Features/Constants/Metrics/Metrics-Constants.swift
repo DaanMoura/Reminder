@@ -18,4 +18,8 @@ public struct Metrics {
   
   public static var buttonHeight: CGFloat = 56
   public static var inputHeight: CGFloat = 56
+  public static var profileImageSize: CGFloat = 64
+  public static var backgroundProfileSize: CGFloat = 268
+  public static var iconButtonPadding: CGFloat = 24
+  public static var buttonIconSize: CGFloat = 14
 }
