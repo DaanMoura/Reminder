@@ -9,8 +9,9 @@ import Foundation
 import UIKit
 
 public struct Colors {
-    static let primaryRedBase = UIColor(red: 192/255, green: 38/255, blue: 54/255, alpha: 1)
-    static let secondaryRedBase = UIColor(red: 235/255, green: 60/255, blue: 77/255, alpha: 1)
-    static let primaryBlueBase = UIColor(red: 51/255, green: 131/255, blue: 220/255, alpha: 1)
-    static let secondaryBlueBase = UIColor(red: 110/255, green: 131/255, blue: 236/255, alpha: 1)
+  static let primaryRedBase = UIColor(red: 192.0/255.0, green: 38.0/255.0, blue: 54.0/255.0, alpha: 1.0)
+  static let secondaryRedBase = UIColor(red: 235.0/255.0, green: 60.0/255.0, blue: 77.0/255.0, alpha: 1.0)
+  static let primaryBlueBase = UIColor(red: 51.0/255.0, green: 131.0/255.0, blue: 220.0/255.0, alpha: 1.0)
+  static let secondaryBlueBase = UIColor(red: 110.0/255.0, green: 131.0/255.0, blue: 236.0/255.0, alpha: 1.0)
+  static let background = UIColor(red: 215.0/255.0, green: 225.0/255.0, blue: 234.0/255.0, alpha: 1.0)
 }

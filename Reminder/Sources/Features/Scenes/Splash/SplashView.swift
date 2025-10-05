@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class SplashView: UIView {
-  private let logoImageView: UIImageView = {
+  internal let logoImageView: UIImageView = {
     let image = UIImageView()
     image.image = UIImage(named: "Logo")
     image.contentMode = .scaleAspectFit

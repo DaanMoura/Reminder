@@ -11,14 +11,6 @@ import UIKit
 class LoginBottomSheetView: UIView {
   public weak var delegate: LoginBottomSheetViewDelegate?
   
-  private let handleArea: UIView = {
-    let view = UIView()
-    view.backgroundColor = .lightGray
-    view.layer.cornerRadius = Metrics.tiny
-    view.translatesAutoresizingMaskIntoConstraints = false
-    return view
-  }()
-  
   private let titleLabel: UILabel = {
     let label = UILabel()
     label.text = "login.welcome.title".localized
@@ -67,10 +59,10 @@ class LoginBottomSheetView: UIView {
     let button = UIButton(type: .system)
     button.setTitle("login.button.title".localized, for: .normal)
     button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-    button.backgroundColor = Colors.primaryRedBase
     button.layer.cornerRadius = Metrics.medium
     button.titleLabel?.font = Typography.subheading
-    button.tintColor = .white
+    button.tintColor = Colors.primaryRedBase
+    button.configuration = .prominentGlass()
     button.translatesAutoresizingMaskIntoConstraints = false
     button.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
     return button
@@ -88,8 +80,9 @@ class LoginBottomSheetView: UIView {
   private func setupUI() {
     self.backgroundColor = .white
     self.layer.cornerRadius = Metrics.small
-   
-    addSubview(handleArea)
+    self.layer.cornerCurve = .continuous
+    self.layer.masksToBounds = true
+
     addSubview(titleLabel)
     addSubview(emailFieldLabel)
     addSubview(emailTextField)
@@ -102,12 +95,7 @@ class LoginBottomSheetView: UIView {
   
   private func setupConstraints() {
     NSLayoutConstraint.activate([
-      handleArea.topAnchor.constraint(equalTo: self.topAnchor, constant: Metrics.small),
-      handleArea.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-      handleArea.widthAnchor.constraint(equalToConstant: 40),
-      handleArea.heightAnchor.constraint(equalToConstant: 6),
-      
-      titleLabel.topAnchor.constraint(equalTo: handleArea.bottomAnchor, constant: Metrics.medium),
+      titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: Metrics.medium),
       titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
       
       emailFieldLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 40),
@@ -140,3 +128,4 @@ class LoginBottomSheetView: UIView {
     delegate?.sendLoginData(user: user, password: password)
   }
 }
+
