@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 
 class HomeView: UIView {
+  public weak var delegate: HomeViewDelegate?
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupUI()
@@ -17,6 +19,7 @@ class HomeView: UIView {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+
   
   private let profileBackground: UIView = {
     let view = UIView()
@@ -34,14 +37,18 @@ class HomeView: UIView {
     return view
   }()
   
-  private let profileImage: UIImageView = {
-    let image = UIImageView()
-    image.image = UIImage(systemName: "person.fill")
-    image.contentMode = .scaleAspectFit
-    image.clipsToBounds = true
-    image.layer.cornerRadius = Metrics.huge
-    image.translatesAutoresizingMaskIntoConstraints = false
-    return image
+  internal let profileImage: UIImageView = {
+    let imageView = UIImageView()
+    imageView.image = UIImage(systemName: "person.fill")
+    imageView.contentMode = .scaleAspectFit
+    imageView.clipsToBounds = true
+    imageView.isUserInteractionEnabled = true
+    imageView.image = UIImage(named: "user")
+    imageView.layer.cornerRadius = Metrics.profileImageSize / 2
+    imageView.layer.borderWidth = 2
+    imageView.layer.borderColor = Colors.primaryBlueBase.cgColor
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    return imageView
   }()
   
   private let logoutIconButton: UIButton = {
@@ -56,6 +63,7 @@ class HomeView: UIView {
                     for: .normal)
     button.configuration?.preferredSymbolConfigurationForImage = .init(pointSize: Metrics.buttonIconSize, weight: .heavy)
     button.translatesAutoresizingMaskIntoConstraints = false
+    button.addTarget(self, action: #selector(onLogoutButtonTap), for: .touchUpInside)
     return button
   }()
   
@@ -113,6 +121,7 @@ class HomeView: UIView {
     contentBackground.addSubview(feedbackButton)
     
     setupConstraints()
+    setupImageGesture()
   }
   
   private func setupConstraints() {
@@ -151,6 +160,22 @@ class HomeView: UIView {
       feedbackButton.heightAnchor.constraint(equalToConstant: Metrics.buttonHeight)
 
     ])
+  }
+  
+  private func setupImageGesture() {
+    let tapGestureRecognizer = UITapGestureRecognizer(target: self,
+                                                      action: #selector(onProfileImageTap))
+    profileImage.addGestureRecognizer(tapGestureRecognizer)
+  }
+  
+  @objc
+  private func onLogoutButtonTap() {
+    delegate?.didTapLogoutButton()
+  }
+  
+  @objc
+  private func onProfileImageTap() {
+    delegate?.didTapProfileImage()
   }
 }
 

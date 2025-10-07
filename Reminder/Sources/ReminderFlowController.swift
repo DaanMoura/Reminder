@@ -46,7 +46,15 @@ extension ReminderFlowController: SplashFlowDelegate {
   }
 }
 
+//MARK: - Home
 extension ReminderFlowController: HomeFlowDelegate {
+  func navigateToSplashScreen() {
+    let rootViewController = viewControllersFactory.makeSplashViewController(flowDelegate: self)
+    self.navigationController?.setViewControllers([rootViewController], animated: true)
+  }
   
+  func navigateToRecipes() {
+    // TODO
+  }
 }
 
