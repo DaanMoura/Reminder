@@ -10,6 +10,7 @@ import Foundation
 class UserDefaultsManager {
   private static let userKey = "userKey"
   private static let userNameKey = "userName"
+  private static let userProfileImgKey = "userProfileImg"
   
   //MARK: User
   static func saveUser(user: User) {
@@ -50,5 +51,18 @@ class UserDefaultsManager {
     UserDefaults.standard.synchronize()
   }
   
-  //MARK: 
+  //MARK: Profile image
+  static func saveUserProfileImage(img: Data) {
+    UserDefaults.standard.set(img, forKey: userProfileImgKey)
+    UserDefaults.standard.synchronize()
+  }
+  
+  static func loadUserProfileImage() -> Data? {
+    return UserDefaults.standard.data(forKey: userProfileImgKey)
+  }
+  
+  static func removeUserProfileImage() {
+    UserDefaults.standard.removeObject(forKey: userProfileImgKey)
+    UserDefaults.standard.synchronize()
+  }
 }

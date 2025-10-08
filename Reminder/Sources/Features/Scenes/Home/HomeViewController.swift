@@ -74,6 +74,10 @@ class HomeViewController: UIViewController {
     } else {
       self.contentView.nameTextField.placeholder = "home.name.placeholder".localized
     }
+    
+    if let userImageData = UserDefaultsManager.loadUserProfileImage() {
+      self.contentView.profileImage.image = UIImage(data: userImageData)
+    }
   }
 }
 
@@ -82,6 +86,7 @@ extension HomeViewController: HomeViewDelegate {
   func didTapLogoutButton() {
     UserDefaultsManager.removeUser()
     UserDefaultsManager.removeUserName()
+    UserDefaultsManager.removeUserProfileImage()
     self.flowDelegate?.navigateToSplashScreen()
   }
  
@@ -103,11 +108,19 @@ extension HomeViewController: UIImagePickerControllerDelegate, UINavigationContr
   internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
     if let editedImage = info[.editedImage] as? UIImage {
       contentView.profileImage.image = editedImage
+      saveImage(image: editedImage)
     } else if let originalImage = info[.originalImage] as? UIImage {
       contentView.profileImage.image = originalImage
+      saveImage(image: originalImage)
     }
     
     dismiss(animated: true)
+  }
+  
+  private func saveImage(image: UIImage) {
+    if let data = image.pngData() {
+      UserDefaultsManager.saveUserProfileImage(img: data)
+    }
   }
   
   func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
