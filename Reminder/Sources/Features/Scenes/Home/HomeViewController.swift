@@ -77,6 +77,8 @@ class HomeViewController: UIViewController {
     
     if let userImageData = UserDefaultsManager.loadUserProfileImage() {
       self.contentView.profileImage.image = UIImage(data: userImageData)
+    } else {
+      self.contentView.profileImage.image = UIImage(named: "user")
     }
   }
 }

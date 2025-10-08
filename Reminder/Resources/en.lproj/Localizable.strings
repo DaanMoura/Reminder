@@ -23,4 +23,11 @@
 
 /* MARK: - Receipts Screen */
 
+"myPrescriptions.title" = "Minhas receitas";
+"myPrescriptions.description" = "Acompanhe os medicamentos e gerencie lembretes";
+
 /* MARK: - NewReceipt Screen */
+
+"newPrescriptions.title" = "Nova receita";
+"newPrescriptions.description" = "Cadastre novos lembretes de receitas";
+

@@ -12,6 +12,7 @@ public struct Metrics {
   public static var huge: CGFloat = 48
   public static var large: CGFloat = 32
   public static var medium: CGFloat = 24
+  public static var medier: CGFloat = 16
   public static var small: CGFloat = 12
   public static var little: CGFloat = 8
   public static var tiny: CGFloat = 4
@@ -22,4 +23,7 @@ public struct Metrics {
   public static var backgroundProfileSize: CGFloat = 268
   public static var iconButtonPadding: CGFloat = 24
   public static var buttonIconSize: CGFloat = 14
+  public static var chevronSize: CGFloat = 16
+  public static var buttonHomeHeight: CGFloat = 112
+  public static var iconImageHeight: CGFloat = 48
 }

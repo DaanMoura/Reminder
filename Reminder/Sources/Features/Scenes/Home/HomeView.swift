@@ -32,8 +32,11 @@ class HomeView: UIView {
   private let contentBackground: UIView = {
     let view = UIView()
     view.layer.cornerRadius = Metrics.medium
-    view.layer.masksToBounds = true
+    view.layer.masksToBounds = false
     view.backgroundColor = Colors.gray800
+    view.layer.shadowColor = Colors.gray200.cgColor
+    view.layer.shadowRadius = 24
+    view.layer.shadowOpacity = 0.25
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
@@ -44,7 +47,6 @@ class HomeView: UIView {
     imageView.contentMode = .scaleAspectFit
     imageView.clipsToBounds = true
     imageView.isUserInteractionEnabled = true
-    imageView.image = UIImage(named: "user")
     imageView.layer.cornerRadius = Metrics.profileImageSize / 2
     imageView.layer.borderWidth = 2
     imageView.layer.borderColor = Colors.primaryBlueBase.cgColor
@@ -86,6 +88,18 @@ class HomeView: UIView {
     return textField
   }()
   
+  private let myPrescriptionsButton = ButtonHomeView(
+    icon: UIImage(named: "paper-icon"),
+    title: "myPrescriptions.title".localized,
+    description: "myPrescriptions.description".localized,
+  )
+  
+  private let newPrescriptionsButton = ButtonHomeView(
+    icon: UIImage(named: "pills-icon"),
+    title: "newPrescriptions.title".localized,
+    description: "newPrescriptions.description".localized,
+  )
+
   private let feedbackButton: UIButton = {
     let button = UIButton(type: .system)
     let buttonImage = UIImage(systemName: "star")
@@ -119,6 +133,8 @@ class HomeView: UIView {
     
     addSubview(contentBackground)
     
+    contentBackground.addSubview(myPrescriptionsButton)
+    contentBackground.addSubview(newPrescriptionsButton)
     contentBackground.addSubview(feedbackButton)
     
     setupConstraints()
@@ -154,6 +170,14 @@ class HomeView: UIView {
       contentBackground.leadingAnchor.constraint(equalTo: self.leadingAnchor),
       contentBackground.trailingAnchor.constraint(equalTo: self.trailingAnchor),
       contentBackground.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+      
+      myPrescriptionsButton.topAnchor.constraint(equalTo: contentBackground.topAnchor, constant: Metrics.large),
+      myPrescriptionsButton.leadingAnchor.constraint(equalTo: contentBackground.leadingAnchor, constant: Metrics.medium),
+      myPrescriptionsButton.trailingAnchor.constraint(equalTo: contentBackground.trailingAnchor, constant: -Metrics.medium),
+      
+      newPrescriptionsButton.topAnchor.constraint(equalTo: myPrescriptionsButton.bottomAnchor, constant: Metrics.medier),
+      newPrescriptionsButton.leadingAnchor.constraint(equalTo: contentBackground.leadingAnchor, constant: Metrics.medium),
+      newPrescriptionsButton.trailingAnchor.constraint(equalTo: contentBackground.trailingAnchor, constant: -Metrics.medium),
 
       feedbackButton.leadingAnchor.constraint(equalTo: contentBackground.leadingAnchor, constant: Metrics.large),
       feedbackButton.trailingAnchor.constraint(equalTo: contentBackground.trailingAnchor, constant: -Metrics.large),
