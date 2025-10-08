@@ -20,6 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     flowController = ReminderFlowController()
     let rootViewController = flowController?.start()
     
+    rootViewController?.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+    
     window.rootViewController = rootViewController
     self.window = window
     window.makeKeyAndVisible()

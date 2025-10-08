@@ -12,11 +12,13 @@ import PhotosUI
 class HomeViewController: UIViewController {
   let contentView: HomeView
   public weak var flowDelegate: HomeFlowDelegate?
+  let viewModel: HomeViewModel
   
   init(contentView: HomeView,
        flowDelegate: HomeFlowDelegate) {
     self.contentView = contentView
     self.flowDelegate = flowDelegate
+    self.viewModel = HomeViewModel()
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -30,6 +32,7 @@ class HomeViewController: UIViewController {
     contentView.delegate = self
     setupBindView()
     setup()
+    checkForExistingData()
 //    setupNavigationBar()
   }
   
@@ -51,6 +54,7 @@ class HomeViewController: UIViewController {
   
   private func setup() {
     view.backgroundColor = Colors.gray600
+    self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     setupConstraints()
   }
   
@@ -63,12 +67,21 @@ class HomeViewController: UIViewController {
   private func logoutAction() {
     self.didTapLogoutButton()
   }
+  
+  private func checkForExistingData() {
+    if let userName = UserDefaultsManager.loadUserName() {
+      self.contentView.nameTextField.text = userName
+    } else {
+      self.contentView.nameTextField.placeholder = "home.name.placeholder".localized
+    }
+  }
 }
 
 //MARK: Delegate
 extension HomeViewController: HomeViewDelegate {
   func didTapLogoutButton() {
     UserDefaultsManager.removeUser()
+    UserDefaultsManager.removeUserName()
     self.flowDelegate?.navigateToSplashScreen()
   }
  

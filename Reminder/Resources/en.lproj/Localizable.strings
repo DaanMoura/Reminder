@@ -19,6 +19,7 @@
 
 "home.welcome.label" = "Boas vindas";
 "home.feedback.button.title" = "Avaliar";
+"home.name.placeholder" = "Insira seu nome";
 
 /* MARK: - Receipts Screen */
 

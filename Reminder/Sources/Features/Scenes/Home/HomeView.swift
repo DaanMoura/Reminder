@@ -14,6 +14,7 @@ class HomeView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupUI()
+    setupTextField()
   }
   
   required init?(coder: NSCoder) {
@@ -76,13 +77,13 @@ class HomeView: UIView {
     return label
   }()
   
-  private let nameLabel: UILabel = {
-    let label = UILabel()
-    label.text = "Daniel Moura"
-    label.textColor = Colors.gray100
-    label.font = Typography.heading
-    label.translatesAutoresizingMaskIntoConstraints = false
-    return label
+  internal let nameTextField: UITextField = {
+    let textField = UITextField()
+    textField.textColor = Colors.gray100
+    textField.font = Typography.heading
+    textField.returnKeyType = .done
+    textField.translatesAutoresizingMaskIntoConstraints = false
+    return textField
   }()
   
   private let feedbackButton: UIButton = {
@@ -114,7 +115,7 @@ class HomeView: UIView {
     profileBackground.addSubview(profileImage)
     profileBackground.addSubview(logoutIconButton)
     profileBackground.addSubview(welcomeLabel)
-    profileBackground.addSubview(nameLabel)
+    profileBackground.addSubview(nameTextField)
     
     addSubview(contentBackground)
     
@@ -144,8 +145,8 @@ class HomeView: UIView {
       welcomeLabel.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: Metrics.medium),
       welcomeLabel.leadingAnchor.constraint(equalTo: profileBackground.leadingAnchor, constant: Metrics.large),
       
-      nameLabel.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: Metrics.small),
-      nameLabel.leadingAnchor.constraint(equalTo: profileBackground.leadingAnchor, constant: Metrics.large),
+      nameTextField.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: Metrics.small),
+      nameTextField.leadingAnchor.constraint(equalTo: profileBackground.leadingAnchor, constant: Metrics.large),
       
       //MARK: - Content background constraints
       
@@ -162,6 +163,10 @@ class HomeView: UIView {
     ])
   }
   
+  private func setupTextField() {
+    nameTextField.delegate = self
+  }
+  
   private func setupImageGesture() {
     let tapGestureRecognizer = UITapGestureRecognizer(target: self,
                                                       action: #selector(onProfileImageTap))
@@ -176,6 +181,15 @@ class HomeView: UIView {
   @objc
   private func onProfileImageTap() {
     delegate?.didTapProfileImage()
+  }
+}
+
+extension HomeView: UITextFieldDelegate {
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    let userName = nameTextField.text ?? ""
+    UserDefaultsManager.saveUserName(name: userName)
+    return true
   }
 }
 

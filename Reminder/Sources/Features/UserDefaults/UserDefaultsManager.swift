@@ -9,7 +9,9 @@ import Foundation
 
 class UserDefaultsManager {
   private static let userKey = "userKey"
+  private static let userNameKey = "userName"
   
+  //MARK: User
   static func saveUser(user: User) {
     let encoder = JSONEncoder()
     if let encoded = try? encoder.encode(user) {
@@ -32,4 +34,21 @@ class UserDefaultsManager {
     UserDefaults.standard.removeObject(forKey: userKey)
     UserDefaults.standard.synchronize()
   }
+ 
+  //MARK: User name
+  static func saveUserName(name: String) {
+      UserDefaults.standard.set(name, forKey: userNameKey)
+      UserDefaults.standard.synchronize()
+  }
+  
+  static func loadUserName() -> String? {
+    return UserDefaults.standard.string(forKey: userNameKey)
+  }
+  
+  static func removeUserName() {
+    UserDefaults.standard.removeObject(forKey: userNameKey)
+    UserDefaults.standard.synchronize()
+  }
+  
+  //MARK: 
 }

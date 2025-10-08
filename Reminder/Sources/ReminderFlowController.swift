@@ -21,6 +21,7 @@ class ReminderFlowController {
   func start() -> UINavigationController? {
     let startViewController = viewControllersFactory.makeSplashViewController(flowDelegate: self)
     self.navigationController = UINavigationController(rootViewController: startViewController)
+    self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     return navigationController
   }
 }
@@ -30,7 +31,8 @@ extension ReminderFlowController: LoginBottomSheetFlowDelegate {
   func navigateToHome() {
     self.navigationController?.dismiss(animated: true)
     let homeViewController = viewControllersFactory.makeHomeViewController(flowDelegate: self)
-    self.navigationController?.setViewControllers([homeViewController], animated: true)
+    self.navigationController?.pushViewController(homeViewController, animated: true)
+//    self.navigationController?.setViewControllers([homeViewController], animated: true)
   }
 }
 
@@ -39,7 +41,6 @@ extension ReminderFlowController: SplashFlowDelegate {
   func openLoginBottomSheet() {
     let loginBottomSheet = viewControllersFactory.makeLoginBottomSheetViewController(flowDelegate: self)
     loginBottomSheet.modalPresentationStyle = .overCurrentContext
-    loginBottomSheet.modalTransitionStyle = .crossDissolve
     navigationController?.present(loginBottomSheet, animated: false) {
       loginBottomSheet.animateShow()
     }
@@ -49,8 +50,8 @@ extension ReminderFlowController: SplashFlowDelegate {
 //MARK: - Home
 extension ReminderFlowController: HomeFlowDelegate {
   func navigateToSplashScreen() {
-    let rootViewController = viewControllersFactory.makeSplashViewController(flowDelegate: self)
-    self.navigationController?.setViewControllers([rootViewController], animated: true)
+    self.navigationController?.popViewController(animated: true)
+    self.openLoginBottomSheet()
   }
   
   func navigateToRecipes() {
