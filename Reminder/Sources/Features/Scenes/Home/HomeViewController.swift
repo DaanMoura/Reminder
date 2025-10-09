@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import PhotosUI
 
+
 class HomeViewController: UIViewController {
   let contentView: HomeView
   public weak var flowDelegate: HomeFlowDelegate?
@@ -30,22 +31,10 @@ class HomeViewController: UIViewController {
     super.viewDidLoad()
     
     contentView.delegate = self
+    
     setupBindView()
     setup()
     checkForExistingData()
-//    setupNavigationBar()
-  }
-  
-  private func setupNavigationBar() {
-    self.navigationController?.navigationBar.isHidden = false
-    self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-    let logoutButton = UIBarButtonItem(image: UIImage(named: "log-out-icon"),
-                                       style: .plain,
-                                       target: self,
-                                       action: #selector(logoutAction))
-    logoutButton.tintColor = Colors.primaryRedBase
-    navigationItem.rightBarButtonItem = logoutButton
-    navigationItem.backAction = nil
   }
   
   private func setupBindView() {
@@ -54,8 +43,22 @@ class HomeViewController: UIViewController {
   
   private func setup() {
     view.backgroundColor = Colors.gray600
-    self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+    let backButton = BackBarButtonItem(title: "",
+                                       style: .plain,
+                                       target: nil,
+                                       action: nil)
+    navigationItem.backBarButtonItem = backButton
     setupConstraints()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.navigationController?.setNavigationBarHidden(true, animated: true)
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    self.navigationController?.setNavigationBarHidden(false, animated: true)
   }
   
   private func setupConstraints() {
@@ -94,6 +97,10 @@ extension HomeViewController: HomeViewDelegate {
  
   func didTapProfileImage() {
     self.selectProfileImageDeprecated()
+  }
+  
+  func didTapNewPrescriptionButton() {
+    self.flowDelegate?.navigateToNewPrescription()
   }
 }
 
@@ -144,3 +151,10 @@ extension HomeViewController: PHPickerViewControllerDelegate  {
     // TODO
   }
 }
+
+class BackBarButtonItem: UIBarButtonItem {
+   override var menu: UIMenu? {
+       get { nil }
+       set { } // Prevent setting a menu
+   }
+   }

@@ -10,4 +10,5 @@ import Foundation
 public protocol HomeViewDelegate: AnyObject {
   func didTapLogoutButton()
   func didTapProfileImage()
+  func didTapNewPrescriptionButton()
 }

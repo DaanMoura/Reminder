@@ -20,7 +20,6 @@ class HomeView: UIView {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-
   
   private let profileBackground: UIView = {
     let view = UIView()
@@ -88,17 +87,23 @@ class HomeView: UIView {
     return textField
   }()
   
-  private let myPrescriptionsButton = ButtonHomeView(
-    icon: UIImage(named: "paper-icon"),
-    title: "myPrescriptions.title".localized,
-    description: "myPrescriptions.description".localized,
-  )
+  private let myPrescriptionsButton: ButtonHomeView = {
+    let buttonHomeView = ButtonHomeView(
+      icon: UIImage(named: "paper-icon"),
+      title: "myPrescriptions.title".localized,
+      description: "myPrescriptions.description".localized,
+    )
+    return buttonHomeView
+  }()
   
-  private let newPrescriptionsButton = ButtonHomeView(
-    icon: UIImage(named: "pills-icon"),
-    title: "newPrescriptions.title".localized,
-    description: "newPrescriptions.description".localized,
-  )
+  private let newPrescriptionsButton: ButtonHomeView = {
+    let buttonHomeView = ButtonHomeView(
+      icon: UIImage(named: "pills-icon"),
+      title: "newPrescriptions.title".localized,
+      description: "newPrescriptions.description".localized,
+    )
+    return buttonHomeView
+  }()
 
   private let feedbackButton: UIButton = {
     let button = UIButton(type: .system)
@@ -139,6 +144,7 @@ class HomeView: UIView {
     
     setupConstraints()
     setupImageGesture()
+    setupNewPrescriptionButtonGesture()
   }
   
   private func setupConstraints() {
@@ -197,6 +203,14 @@ class HomeView: UIView {
     profileImage.addGestureRecognizer(tapGestureRecognizer)
   }
   
+  private func setupNewPrescriptionButtonGesture() {
+    let tapGestureRecognizer = UITapGestureRecognizer(
+      target: self,
+      action: #selector(onNewPrescriptionButtonTap)
+    )
+    newPrescriptionsButton.addGestureRecognizer(tapGestureRecognizer)
+  }
+  
   @objc
   private func onLogoutButtonTap() {
     delegate?.didTapLogoutButton()
@@ -205,6 +219,11 @@ class HomeView: UIView {
   @objc
   private func onProfileImageTap() {
     delegate?.didTapProfileImage()
+  }
+  
+  @objc
+  private func onNewPrescriptionButtonTap() {
+    delegate?.didTapNewPrescriptionButton()
   }
 }
 

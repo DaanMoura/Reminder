@@ -20,8 +20,8 @@ class ReminderFlowController {
   //MARK: - startFlow
   func start() -> UINavigationController? {
     let startViewController = viewControllersFactory.makeSplashViewController(flowDelegate: self)
+//    let startViewController = viewControllersFactory.makeNewReceiptViewController(flowDelegate: self)
     self.navigationController = UINavigationController(rootViewController: startViewController)
-    self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     return navigationController
   }
 }
@@ -32,7 +32,6 @@ extension ReminderFlowController: LoginBottomSheetFlowDelegate {
     self.navigationController?.dismiss(animated: true)
     let homeViewController = viewControllersFactory.makeHomeViewController(flowDelegate: self)
     self.navigationController?.pushViewController(homeViewController, animated: true)
-//    self.navigationController?.setViewControllers([homeViewController], animated: true)
   }
 }
 
@@ -57,5 +56,15 @@ extension ReminderFlowController: HomeFlowDelegate {
   func navigateToRecipes() {
     // TODO
   }
+  
+  func navigateToNewPrescription() {
+    let newReceiptViewController = viewControllersFactory.makeNewReceiptViewController(flowDelegate: self)
+    self.navigationController?.pushViewController(newReceiptViewController, animated: true)
+  }
+}
+
+//MARK: - New Receipt
+extension ReminderFlowController: NewReceiptFlowDelegate {
+  
 }
 
