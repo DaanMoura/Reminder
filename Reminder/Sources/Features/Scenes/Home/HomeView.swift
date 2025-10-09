@@ -100,7 +100,7 @@ class HomeView: UIView {
     let buttonHomeView = ButtonHomeView(
       icon: UIImage(named: "pills-icon"),
       title: "newPrescriptions.title".localized,
-      description: "newPrescriptions.description".localized,
+      description: "newPrescriptions.description.short".localized,
     )
     return buttonHomeView
   }()
@@ -112,16 +112,16 @@ class HomeView: UIView {
     button.setTitle("home.feedback.button.title".localized, for: .normal)
     button.layer.cornerRadius = Metrics.medium
     button.tintColor = Colors.gray100
+    
     button.configuration = .prominentGlass()
     button.configuration?.imagePadding = Metrics.little
-    
     button.configuration?.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
         var outgoing = incoming
         outgoing.font = Typography.subheading
         return outgoing
     }
-
     button.configuration?.preferredSymbolConfigurationForImage = .init(pointSize: Metrics.buttonIconSize, weight: .heavy)
+    
     button.translatesAutoresizingMaskIntoConstraints = false
     return button
   }()

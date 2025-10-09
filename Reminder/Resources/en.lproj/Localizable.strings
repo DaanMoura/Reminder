@@ -29,5 +29,7 @@
 /* MARK: - NewReceipt Screen */
 
 "newPrescriptions.title" = "Nova receita";
-"newPrescriptions.description" = "Cadastre novos lembretes de receitas";
+"newPrescriptions.description.short" = "Cadastre novos lembretes de receitas";
+"newPrescriptions.description.long" = "Adicione a sua prescrição médica para receber lembretes de quando tomar seu medicamento";
+"newPrescriptions.add.button.title" = "Adicionar";
 
