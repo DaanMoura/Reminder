@@ -69,22 +69,27 @@ class NewReceiptView: UIView {
   
   // TODO: Recorrency select
   
-  private let useNowCheckbox: UIButton = {
-    let button = UIButton(type: .system)
-    let checkImage = UIImage(systemName: "checkmark")
-    button.setImage(checkImage, for: .selected)
-    button.layer.cornerRadius = Metrics.tiny
-    button.translatesAutoresizingMaskIntoConstraints = false
-    return button
-  }()
+//  private let useNowCheckbox: UIButton = {
+//    let button = UIButton(type: .system)
+//    let checkImage = UIImage(systemName: "checkmark")
+//    button.setImage(checkImage, for: .selected)
+//    button.layer.cornerRadius = Metrics.tiny
+//    button.translatesAutoresizingMaskIntoConstraints = false
+//    return button
+//  }()
+//  
+//  private let useNowLabel: UILabel = {
+//    let label = UILabel()
+//    label.text = "newPrescriptions.useNow.title".localized
+//    label.font = Typography.input
+//    label.textColor = Colors.gray200
+//    label.translatesAutoresizingMaskIntoConstraints = false
+//    return label
+//  }()
   
-  private let useNowLabel: UILabel = {
-    let label = UILabel()
-    label.text = "newPrescriptions.useNow.title".localized
-    label.font = Typography.input
-    label.textColor = Colors.gray200
-    label.translatesAutoresizingMaskIntoConstraints = false
-    return label
+  private let useNowCheckbox: Checkbox = {
+    let checkbox = Checkbox(title: "newPrescriptions.useNow.title".localized)
+    return checkbox
   }()
   
   private let addButton: Button = {
@@ -104,9 +109,9 @@ class NewReceiptView: UIView {
     addSubview(medicineInput)
     addSubview(hourLabel)
     addSubview(hourTimePicker)
-    addSubview(recorrencyLabel)
+//    addSubview(recorrencyLabel)
     addSubview(useNowCheckbox)
-    addSubview(useNowLabel)
+//    addSubview(useNowLabel)
     
     addSubview(addButton)
     
@@ -132,22 +137,20 @@ class NewReceiptView: UIView {
       hourLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
       hourLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
       
-      hourTimePicker.topAnchor.constraint(equalTo: hourLabel.bottomAnchor, constant: Metrics.small),
+      hourTimePicker.topAnchor.constraint(equalTo: hourLabel.bottomAnchor, constant: Metrics.tiny),
       hourTimePicker.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
-      hourTimePicker.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
-      hourTimePicker.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -Metrics.large * 2),
       hourTimePicker.heightAnchor.constraint(equalToConstant: Metrics.inputHeight),
       
 //      TODO: add recorrency constraints
       
-      useNowCheckbox.topAnchor.constraint(equalTo: hourTimePicker.bottomAnchor, constant: Metrics.small),
+      useNowCheckbox.topAnchor.constraint(equalTo: hourTimePicker.bottomAnchor, constant: Metrics.medium),
 //      useNowCheckbox.topAnchor.constraint(equalTo: medicineTextField.bottomAnchor, constant: Metrics.small),
       useNowCheckbox.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
-      useNowCheckbox.widthAnchor.constraint(equalToConstant: Metrics.medium),
-      useNowCheckbox.heightAnchor.constraint(equalToConstant: Metrics.medium),
+//      useNowCheckbox.widthAnchor.constraint(equalToConstant: Metrics.medium),
+//      useNowCheckbox.heightAnchor.constraint(equalToConstant: Metrics.medium),
       
-      useNowLabel.centerYAnchor.constraint(equalTo: useNowCheckbox.centerYAnchor),
-      useNowLabel.leadingAnchor.constraint(equalTo: useNowCheckbox.trailingAnchor, constant: Metrics.small)
+//      useNowLabel.centerYAnchor.constraint(equalTo: useNowCheckbox.centerYAnchor),
+//      useNowLabel.leadingAnchor.constraint(equalTo: useNowCheckbox.trailingAnchor, constant: Metrics.small)
     ])
   }
 }

@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 class ButtonHomeView: UIView {
+  var tapAction: (() -> Void)?
   
   private let backgroundView: UIView = {
     let view = UIView()
@@ -113,11 +114,25 @@ class ButtonHomeView: UIView {
     
     setupUI()
     setupConstraints()
-    
+    setupGesture()
   }
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+  
+  private func setupGesture() {
+    let tapGestureRecognizer = UITapGestureRecognizer(
+      target: self,
+      action: #selector(onTapGesture)
+    )
+    self.addGestureRecognizer(tapGestureRecognizer)
+    self.isUserInteractionEnabled = true
+  }
+  
+  @objc
+  private func onTapGesture() {
+    tapAction?()
   }
 
 }

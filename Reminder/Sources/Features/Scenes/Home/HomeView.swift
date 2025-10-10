@@ -132,7 +132,7 @@ class HomeView: UIView {
     
     setupConstraints()
     setupImageGesture()
-    setupNewPrescriptionButtonGesture()
+    setupActionForNewPrescriptionButton()
   }
   
   private func setupConstraints() {
@@ -186,12 +186,10 @@ class HomeView: UIView {
     profileImage.addGestureRecognizer(tapGestureRecognizer)
   }
   
-  private func setupNewPrescriptionButtonGesture() {
-    let tapGestureRecognizer = UITapGestureRecognizer(
-      target: self,
-      action: #selector(onNewPrescriptionButtonTap)
-    )
-    newPrescriptionsButton.addGestureRecognizer(tapGestureRecognizer)
+  private func setupActionForNewPrescriptionButton() {
+    newPrescriptionsButton.tapAction = { [weak self] in
+      self?.delegate?.didTapNewPrescriptionButton()
+    }
   }
   
   @objc
@@ -202,11 +200,6 @@ class HomeView: UIView {
   @objc
   private func onProfileImageTap() {
     delegate?.didTapProfileImage()
-  }
-  
-  @objc
-  private func onNewPrescriptionButtonTap() {
-    delegate?.didTapNewPrescriptionButton()
   }
 }
 

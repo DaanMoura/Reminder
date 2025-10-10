@@ -59,10 +59,6 @@ class LoginBottomSheetView: UIView {
     self.layer.masksToBounds = true
 
     addSubview(titleLabel)
-//    addSubview(emailFieldLabel)
-//    addSubview(emailTextField)
-//    addSubview(passwordFieldLabel)
-//    addSubview(passwordTextField)
     addSubview(emailInput)
     addSubview(passwordInput)
     addSubview(loginButton)
@@ -83,11 +79,6 @@ class LoginBottomSheetView: UIView {
       passwordInput.topAnchor.constraint(equalTo: emailInput.bottomAnchor, constant: Metrics.larger),
       passwordInput.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
       passwordInput.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
-
-//      loginButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
-//      loginButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
-//      loginButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Metrics.large),
-//      loginButton.heightAnchor.constraint(equalToConstant: Metrics.buttonHeight)
     ])
   }
  
