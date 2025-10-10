@@ -105,24 +105,12 @@ class HomeView: UIView {
     return buttonHomeView
   }()
 
-  private let feedbackButton: UIButton = {
-    let button = UIButton(type: .system)
+  private let feedbackButton: Button = {
+    let button = Button()
     let buttonImage = UIImage(systemName: "star")
     button.setImage(buttonImage, for: .normal)
     button.setTitle("home.feedback.button.title".localized, for: .normal)
-    button.layer.cornerRadius = Metrics.medium
     button.tintColor = Colors.gray100
-    
-    button.configuration = .prominentGlass()
-    button.configuration?.imagePadding = Metrics.little
-    button.configuration?.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
-        var outgoing = incoming
-        outgoing.font = Typography.subheading
-        return outgoing
-    }
-    button.configuration?.preferredSymbolConfigurationForImage = .init(pointSize: Metrics.buttonIconSize, weight: .heavy)
-    
-    button.translatesAutoresizingMaskIntoConstraints = false
     return button
   }()
   
@@ -148,6 +136,7 @@ class HomeView: UIView {
   }
   
   private func setupConstraints() {
+    feedbackButton.setupDefaultConstraints(to: self)
     NSLayoutConstraint.activate([
       //MARK: - Profile background constrainsts
       
@@ -184,12 +173,6 @@ class HomeView: UIView {
       newPrescriptionsButton.topAnchor.constraint(equalTo: myPrescriptionsButton.bottomAnchor, constant: Metrics.medier),
       newPrescriptionsButton.leadingAnchor.constraint(equalTo: contentBackground.leadingAnchor, constant: Metrics.medium),
       newPrescriptionsButton.trailingAnchor.constraint(equalTo: contentBackground.trailingAnchor, constant: -Metrics.medium),
-
-      feedbackButton.leadingAnchor.constraint(equalTo: contentBackground.leadingAnchor, constant: Metrics.large),
-      feedbackButton.trailingAnchor.constraint(equalTo: contentBackground.trailingAnchor, constant: -Metrics.large),
-      feedbackButton.bottomAnchor.constraint(equalTo: contentBackground.safeAreaLayoutGuide.bottomAnchor, constant: -Metrics.tiny),
-      feedbackButton.heightAnchor.constraint(equalToConstant: Metrics.buttonHeight)
-
     ])
   }
   

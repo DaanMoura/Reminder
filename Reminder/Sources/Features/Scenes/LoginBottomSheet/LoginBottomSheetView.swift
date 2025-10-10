@@ -34,15 +34,11 @@ class LoginBottomSheetView: UIView {
     return input
   }()
   
-  private let loginButton: UIButton = {
-    let button = UIButton(type: .system)
+  private let loginButton: Button = {
+//    let button = UIButton(type: .system)
+    let button = Button()
     button.setTitle("login.button.title".localized, for: .normal)
-    button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-    button.layer.cornerRadius = Metrics.medium
-    button.titleLabel?.font = Typography.subheading
     button.tintColor = Colors.primaryRedBase
-    button.configuration = .prominentGlass()
-    button.translatesAutoresizingMaskIntoConstraints = false
     button.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
     return button
   }()
@@ -75,6 +71,7 @@ class LoginBottomSheetView: UIView {
   }
   
   private func setupConstraints() {
+    loginButton.setupDefaultConstraints(to: self)
     NSLayoutConstraint.activate([
       titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: Metrics.medium),
       titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
@@ -87,10 +84,10 @@ class LoginBottomSheetView: UIView {
       passwordInput.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
       passwordInput.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
 
-      loginButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
-      loginButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
-      loginButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Metrics.large),
-      loginButton.heightAnchor.constraint(equalToConstant: Metrics.buttonHeight)
+//      loginButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
+//      loginButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
+//      loginButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Metrics.large),
+//      loginButton.heightAnchor.constraint(equalToConstant: Metrics.buttonHeight)
     ])
   }
  

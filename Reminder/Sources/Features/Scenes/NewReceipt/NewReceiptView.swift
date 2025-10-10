@@ -87,25 +87,13 @@ class NewReceiptView: UIView {
     return label
   }()
   
-  private let addButton: UIButton = {
-    let button = UIButton(type: .system)
+  private let addButton: Button = {
+    let button = Button()
     let buttonImage = UIImage(systemName: "plus")
     button.setImage(buttonImage, for: .normal)
     button.setTitle("newPrescriptions.add.button.title".localized, for: .normal)
-    button.layer.cornerRadius = Metrics.medium
     button.tintColor = Colors.primaryRedBase
-    
-    button.configuration = .prominentGlass()
-    button.configuration?.imagePadding = Metrics.little
-    button.configuration?.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
-        var outgoing = incoming
-        outgoing.font = Typography.subheading
-        return outgoing
-    }
-    button.configuration?.preferredSymbolConfigurationForImage = .init(pointSize: Metrics.buttonIconSize, weight: .heavy)
-
-//    button.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
-    button.translatesAutoresizingMaskIntoConstraints = false
+    //    button.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
     return button
   }()
 
@@ -126,6 +114,7 @@ class NewReceiptView: UIView {
   }
   
   private func setupConstraints() {
+    addButton.setupDefaultConstraints(to: self)
     NSLayoutConstraint.activate([
       titleLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: Metrics.small),
       titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
@@ -158,12 +147,7 @@ class NewReceiptView: UIView {
       useNowCheckbox.heightAnchor.constraint(equalToConstant: Metrics.medium),
       
       useNowLabel.centerYAnchor.constraint(equalTo: useNowCheckbox.centerYAnchor),
-      useNowLabel.leadingAnchor.constraint(equalTo: useNowCheckbox.trailingAnchor, constant: Metrics.small),
-
-      addButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
-      addButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
-      addButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -Metrics.tiny),
-      addButton.heightAnchor.constraint(equalToConstant: Metrics.buttonHeight)
+      useNowLabel.leadingAnchor.constraint(equalTo: useNowCheckbox.trailingAnchor, constant: Metrics.small)
     ])
   }
 }
