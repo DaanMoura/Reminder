@@ -32,4 +32,8 @@
 "newPrescriptions.description.short" = "Cadastre novos lembretes de receitas";
 "newPrescriptions.description.long" = "Adicione a sua prescrição médica para receber lembretes de quando tomar seu medicamento";
 "newPrescriptions.add.button.title" = "Adicionar";
-
+"newPrescriptions.medicine.title" = "Remédio";
+"newPrescriptions.medicine.placeholder" = "Nome do medicamento";
+"newPrescriptions.hour.title" = "Hour";
+"newPrescriptions.recorrency.title" = "Recorrência";
+"newPrescriptions.useNow.title" = "Usar agora";

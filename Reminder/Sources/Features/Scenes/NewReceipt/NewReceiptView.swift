@@ -37,7 +37,68 @@ class NewReceiptView: UIView {
     return label
   }()
   
-  // TODO: formulário
+  private let medicineLabel: UILabel = {
+    let label = UILabel()
+    label.text = "newPrescriptions.medicine.title".localized
+    label.font = Typography.label
+    label.textColor = Colors.gray100
+    label.translatesAutoresizingMaskIntoConstraints = false
+    return label
+  }()
+  
+  private let medicineTextField: UITextField = {
+    let textField = UITextField()
+    textField.placeholder = "newPrescriptions.medicine.placeholder".localized
+    textField.borderStyle = .roundedRect
+    textField.font = Typography.input
+    textField.translatesAutoresizingMaskIntoConstraints = false
+    return textField
+  }()
+  
+  private let hourLabel: UILabel = {
+    let label = UILabel()
+    label.text = "newPrescriptions.hour.title".localized
+    label.font = Typography.label
+    label.textColor = Colors.gray100
+    label.translatesAutoresizingMaskIntoConstraints = false
+    return label
+  }()
+  
+  private let hourTimePicker: UIDatePicker = {
+    let timePicker = UIDatePicker()
+    timePicker.datePickerMode = .time
+    timePicker.translatesAutoresizingMaskIntoConstraints = false
+    return timePicker
+  }()
+  
+  private let recorrencyLabel: UILabel = {
+    let label = UILabel()
+    label.text = "newPrescriptions.recorrency.title".localized
+    label.font = Typography.label
+    label.textColor = Colors.gray100
+    label.translatesAutoresizingMaskIntoConstraints = false
+    return label
+  }()
+  
+  // TODO: Recorrency select
+  
+  private let useNowCheckbox: UIButton = {
+    let button = UIButton(type: .system)
+    let checkImage = UIImage(systemName: "checkmark")
+    button.setImage(checkImage, for: .selected)
+    button.layer.cornerRadius = Metrics.tiny
+    button.translatesAutoresizingMaskIntoConstraints = false
+    return button
+  }()
+  
+  private let useNowLabel: UILabel = {
+    let label = UILabel()
+    label.text = "newPrescriptions.useNow.title".localized
+    label.font = Typography.input
+    label.textColor = Colors.gray200
+    label.translatesAutoresizingMaskIntoConstraints = false
+    return label
+  }()
   
   private let addButton: UIButton = {
     let button = UIButton(type: .system)
@@ -64,6 +125,16 @@ class NewReceiptView: UIView {
   private func setupUI() {
     addSubview(titleLabel)
     addSubview(descriptionLabel)
+    
+    addSubview(medicineLabel)
+    addSubview(medicineTextField)
+    addSubview(hourLabel)
+    addSubview(hourTimePicker)
+    addSubview(recorrencyLabel)
+//    addSubview(recorrencySelect)
+    addSubview(useNowCheckbox)
+    addSubview(useNowLabel)
+    
     addSubview(addButton)
     
     setupConstraints()
@@ -79,6 +150,37 @@ class NewReceiptView: UIView {
       descriptionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
       descriptionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
       
+      medicineLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: Metrics.larger),
+      medicineLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
+      medicineLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
+      
+      medicineTextField.topAnchor.constraint(equalTo: medicineLabel.bottomAnchor, constant: Metrics.small),
+      medicineTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
+      medicineTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
+      medicineTextField.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -Metrics.large * 2),
+      medicineTextField.heightAnchor.constraint(equalToConstant: Metrics.inputHeight),
+      
+      hourLabel.topAnchor.constraint(equalTo: medicineTextField.bottomAnchor, constant: Metrics.medium),
+      hourLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
+      hourLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
+      
+      hourTimePicker.topAnchor.constraint(equalTo: hourLabel.bottomAnchor, constant: Metrics.small),
+      hourTimePicker.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
+      hourTimePicker.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
+      hourTimePicker.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -Metrics.large * 2),
+      hourTimePicker.heightAnchor.constraint(equalToConstant: Metrics.inputHeight),
+      
+//      TODO: add recorrency constraints
+      
+      useNowCheckbox.topAnchor.constraint(equalTo: hourTimePicker.bottomAnchor, constant: Metrics.small),
+//      useNowCheckbox.topAnchor.constraint(equalTo: medicineTextField.bottomAnchor, constant: Metrics.small),
+      useNowCheckbox.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
+      useNowCheckbox.widthAnchor.constraint(equalToConstant: Metrics.medium),
+      useNowCheckbox.heightAnchor.constraint(equalToConstant: Metrics.medium),
+      
+      useNowLabel.centerYAnchor.constraint(equalTo: useNowCheckbox.centerYAnchor),
+      useNowLabel.leadingAnchor.constraint(equalTo: useNowCheckbox.trailingAnchor, constant: Metrics.small),
+
       addButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
       addButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
       addButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -Metrics.tiny),
