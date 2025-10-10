@@ -20,39 +20,18 @@ class LoginBottomSheetView: UIView {
     return label
   }()
   
-  private let emailFieldLabel: UILabel = {
-    let label = UILabel()
-    label.text = "login.email.label".localized
-    label.font = Typography.label
-    label.translatesAutoresizingMaskIntoConstraints = false
-    return label
-  }()
+  private let emailInput = Input(
+    title: "login.email.label".localized,
+    placeholder: "login.email.placeholder".localized
+  )
   
-  private let emailTextField: UITextField = {
-    let text = UITextField()
-    text.placeholder = "login.email.placeholder".localized
-    text.borderStyle = .roundedRect
-    text.font = Typography.input
-    text.translatesAutoresizingMaskIntoConstraints = false
-    return text
-  }()
-  
-  private let passwordFieldLabel: UILabel = {
-    let label = UILabel()
-    label.text = "login.password.label".localized
-    label.font = Typography.label
-    label.translatesAutoresizingMaskIntoConstraints = false
-    return label
-  }()
-  
-  private let passwordTextField: UITextField = {
-    let text = UITextField()
-    text.placeholder = "login.password.placeholder".localized
-    text.borderStyle = .roundedRect
-    text.font = Typography.input
-    text.isSecureTextEntry = true
-    text.translatesAutoresizingMaskIntoConstraints = false
-    return text
+  private let passwordInput: Input = {
+    let input = Input(
+      title: "login.password.label".localized,
+      placeholder: "login.password.placeholder".localized
+    )
+    input.enableSecureText()
+    return input
   }()
   
   private let loginButton: UIButton = {
@@ -84,10 +63,12 @@ class LoginBottomSheetView: UIView {
     self.layer.masksToBounds = true
 
     addSubview(titleLabel)
-    addSubview(emailFieldLabel)
-    addSubview(emailTextField)
-    addSubview(passwordFieldLabel)
-    addSubview(passwordTextField)
+//    addSubview(emailFieldLabel)
+//    addSubview(emailTextField)
+//    addSubview(passwordFieldLabel)
+//    addSubview(passwordTextField)
+    addSubview(emailInput)
+    addSubview(passwordInput)
     addSubview(loginButton)
     
     setupConstraints()
@@ -98,21 +79,13 @@ class LoginBottomSheetView: UIView {
       titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: Metrics.medium),
       titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
       
-      emailFieldLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 40),
-      emailFieldLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
-     
-      emailTextField.topAnchor.constraint(equalTo: emailFieldLabel.bottomAnchor, constant: Metrics.small),
-      emailTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
-      emailTextField.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -Metrics.large * 2),
-      emailTextField.heightAnchor.constraint(equalToConstant: Metrics.inputHeight),
+      emailInput.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Metrics.larger),
+      emailInput.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
+      emailInput.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
       
-      passwordFieldLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 20),
-      passwordFieldLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
-      
-      passwordTextField.topAnchor.constraint(equalTo: passwordFieldLabel.bottomAnchor, constant: Metrics.small),
-      passwordTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
-      passwordTextField.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -Metrics.large * 2),
-      passwordTextField.heightAnchor.constraint(equalToConstant: Metrics.inputHeight),
+      passwordInput.topAnchor.constraint(equalTo: emailInput.bottomAnchor, constant: Metrics.larger),
+      passwordInput.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
+      passwordInput.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
 
       loginButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
       loginButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
@@ -123,8 +96,8 @@ class LoginBottomSheetView: UIView {
  
   @objc
   private func loginButtonDidTap() {
-    let user = emailTextField.text ?? ""
-    let password = passwordTextField.text ?? ""
+    let user = emailInput.getText()
+    let password = passwordInput.getText()
     delegate?.sendLoginData(user: user, password: password)
   }
 }

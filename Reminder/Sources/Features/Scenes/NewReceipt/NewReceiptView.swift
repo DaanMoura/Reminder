@@ -37,23 +37,10 @@ class NewReceiptView: UIView {
     return label
   }()
   
-  private let medicineLabel: UILabel = {
-    let label = UILabel()
-    label.text = "newPrescriptions.medicine.title".localized
-    label.font = Typography.label
-    label.textColor = Colors.gray100
-    label.translatesAutoresizingMaskIntoConstraints = false
-    return label
-  }()
-  
-  private let medicineTextField: UITextField = {
-    let textField = UITextField()
-    textField.placeholder = "newPrescriptions.medicine.placeholder".localized
-    textField.borderStyle = .roundedRect
-    textField.font = Typography.input
-    textField.translatesAutoresizingMaskIntoConstraints = false
-    return textField
-  }()
+  private let medicineInput = Input(
+    title: "newPrescriptions.medicine.title".localized,
+    placeholder: "newPrescriptions.medicine.placeholder".localized
+  )
   
   private let hourLabel: UILabel = {
     let label = UILabel()
@@ -126,12 +113,10 @@ class NewReceiptView: UIView {
     addSubview(titleLabel)
     addSubview(descriptionLabel)
     
-    addSubview(medicineLabel)
-    addSubview(medicineTextField)
+    addSubview(medicineInput)
     addSubview(hourLabel)
     addSubview(hourTimePicker)
     addSubview(recorrencyLabel)
-//    addSubview(recorrencySelect)
     addSubview(useNowCheckbox)
     addSubview(useNowLabel)
     
@@ -150,17 +135,11 @@ class NewReceiptView: UIView {
       descriptionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
       descriptionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
       
-      medicineLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: Metrics.larger),
-      medicineLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
-      medicineLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
-      
-      medicineTextField.topAnchor.constraint(equalTo: medicineLabel.bottomAnchor, constant: Metrics.small),
-      medicineTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
-      medicineTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
-      medicineTextField.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -Metrics.large * 2),
-      medicineTextField.heightAnchor.constraint(equalToConstant: Metrics.inputHeight),
-      
-      hourLabel.topAnchor.constraint(equalTo: medicineTextField.bottomAnchor, constant: Metrics.medium),
+      medicineInput.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: Metrics.larger),
+      medicineInput.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
+      medicineInput.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
+
+      hourLabel.topAnchor.constraint(equalTo: medicineInput.bottomAnchor, constant: Metrics.medium),
       hourLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
       hourLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
       
