@@ -1,5 +1,5 @@
 //
-//  NewReceiptView.swift
+//  NewPrescriptionView.swift
 //  Reminder
 //
 //  Created by Daniel Moura on 09/10/25.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class NewReceiptView: UIView {
+class NewPrescriptionView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupUI()
@@ -20,7 +20,7 @@ class NewReceiptView: UIView {
   
   private let titleLabel: UILabel = {
     let label = UILabel()
-    label.text = "newPrescriptions.title".localized
+    label.text = "newPrescription.title".localized
     label.font = Typography.heading
     label.textColor = Colors.primaryRedBase
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -29,7 +29,7 @@ class NewReceiptView: UIView {
   
   private let descriptionLabel: UILabel = {
     let label = UILabel()
-    label.text = "newPrescriptions.description.long".localized
+    label.text = "newPrescription.description.long".localized
     label.numberOfLines = 3
     label.font = Typography.body
     label.textColor = Colors.gray200
@@ -38,13 +38,13 @@ class NewReceiptView: UIView {
   }()
   
   private let medicineInput = Input(
-    title: "newPrescriptions.medicine.title".localized,
-    placeholder: "newPrescriptions.medicine.placeholder".localized
+    title: "newPrescription.medicine.title".localized,
+    placeholder: "newPrescription.medicine.placeholder".localized
   )
   
   private let hourLabel: UILabel = {
     let label = UILabel()
-    label.text = "newPrescriptions.hour.title".localized
+    label.text = "newPrescription.hour.title".localized
     label.font = Typography.label
     label.textColor = Colors.gray100
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -60,7 +60,7 @@ class NewReceiptView: UIView {
   
   private let recorrencyLabel: UILabel = {
     let label = UILabel()
-    label.text = "newPrescriptions.recorrency.title".localized
+    label.text = "newPrescription.recorrency.title".localized
     label.font = Typography.label
     label.textColor = Colors.gray100
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -80,7 +80,7 @@ class NewReceiptView: UIView {
 //  
 //  private let useNowLabel: UILabel = {
 //    let label = UILabel()
-//    label.text = "newPrescriptions.useNow.title".localized
+//    label.text = "newPrescription.useNow.title".localized
 //    label.font = Typography.input
 //    label.textColor = Colors.gray200
 //    label.translatesAutoresizingMaskIntoConstraints = false
@@ -88,7 +88,7 @@ class NewReceiptView: UIView {
 //  }()
   
   private let useNowCheckbox: Checkbox = {
-    let checkbox = Checkbox(title: "newPrescriptions.useNow.title".localized)
+    let checkbox = Checkbox(title: "newPrescription.useNow.title".localized)
     return checkbox
   }()
   
@@ -96,7 +96,7 @@ class NewReceiptView: UIView {
     let button = Button()
     let buttonImage = UIImage(systemName: "plus")
     button.setImage(buttonImage, for: .normal)
-    button.setTitle("newPrescriptions.add.button.title".localized, for: .normal)
+    button.setTitle("newPrescription.add.button.title".localized, for: .normal)
     button.tintColor = Colors.primaryRedBase
     //    button.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
     return button

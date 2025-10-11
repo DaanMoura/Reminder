@@ -20,7 +20,6 @@ class ReminderFlowController {
   //MARK: - startFlow
   func start() -> UINavigationController? {
     let startViewController = viewControllersFactory.makeSplashViewController(flowDelegate: self)
-//    let startViewController = viewControllersFactory.makeNewReceiptViewController(flowDelegate: self)
     self.navigationController = UINavigationController(rootViewController: startViewController)
     return navigationController
   }
@@ -58,13 +57,13 @@ extension ReminderFlowController: HomeFlowDelegate {
   }
   
   func navigateToNewPrescription() {
-    let newReceiptViewController = viewControllersFactory.makeNewReceiptViewController(flowDelegate: self)
+    let newReceiptViewController = viewControllersFactory.makeNewPrescriptionViewController(flowDelegate: self)
     self.navigationController?.pushViewController(newReceiptViewController, animated: true)
   }
 }
 
 //MARK: - New Receipt
-extension ReminderFlowController: NewReceiptFlowDelegate {
+extension ReminderFlowController: NewPrescriptionFlowDelegate {
   
 }
 

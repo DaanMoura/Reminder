@@ -30,9 +30,9 @@ final class ViewControllersFactory: ViewControllersFactoryProtocol {
     return viewController
   }
   
-  func makeNewReceiptViewController(flowDelegate: NewReceiptFlowDelegate) -> NewReceiptViewController {
-    let contentView = NewReceiptView()
-    let viewController = NewReceiptViewController(contentView: contentView,
+  func makeNewPrescriptionViewController(flowDelegate: NewPrescriptionFlowDelegate) -> NewPrescriptionViewController {
+    let contentView = NewPrescriptionView()
+    let viewController = NewPrescriptionViewController(contentView: contentView,
                                                   flowDelegate: flowDelegate)
     return viewController
   }

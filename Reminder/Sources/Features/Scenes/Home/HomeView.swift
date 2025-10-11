@@ -96,11 +96,11 @@ class HomeView: UIView {
     return buttonHomeView
   }()
   
-  private let newPrescriptionsButton: ButtonHomeView = {
+  private let newPrescriptionButton: ButtonHomeView = {
     let buttonHomeView = ButtonHomeView(
       icon: UIImage(named: "pills-icon"),
-      title: "newPrescriptions.title".localized,
-      description: "newPrescriptions.description.short".localized,
+      title: "newPrescription.title".localized,
+      description: "newPrescription.description.short".localized,
     )
     return buttonHomeView
   }()
@@ -127,7 +127,7 @@ class HomeView: UIView {
     addSubview(contentBackground)
     
     contentBackground.addSubview(myPrescriptionsButton)
-    contentBackground.addSubview(newPrescriptionsButton)
+    contentBackground.addSubview(newPrescriptionButton)
     contentBackground.addSubview(feedbackButton)
     
     setupConstraints()
@@ -170,9 +170,9 @@ class HomeView: UIView {
       myPrescriptionsButton.leadingAnchor.constraint(equalTo: contentBackground.leadingAnchor, constant: Metrics.medium),
       myPrescriptionsButton.trailingAnchor.constraint(equalTo: contentBackground.trailingAnchor, constant: -Metrics.medium),
       
-      newPrescriptionsButton.topAnchor.constraint(equalTo: myPrescriptionsButton.bottomAnchor, constant: Metrics.medier),
-      newPrescriptionsButton.leadingAnchor.constraint(equalTo: contentBackground.leadingAnchor, constant: Metrics.medium),
-      newPrescriptionsButton.trailingAnchor.constraint(equalTo: contentBackground.trailingAnchor, constant: -Metrics.medium),
+      newPrescriptionButton.topAnchor.constraint(equalTo: myPrescriptionsButton.bottomAnchor, constant: Metrics.medier),
+      newPrescriptionButton.leadingAnchor.constraint(equalTo: contentBackground.leadingAnchor, constant: Metrics.medium),
+      newPrescriptionButton.trailingAnchor.constraint(equalTo: contentBackground.trailingAnchor, constant: -Metrics.medium),
     ])
   }
   
@@ -187,7 +187,7 @@ class HomeView: UIView {
   }
   
   private func setupActionForNewPrescriptionButton() {
-    newPrescriptionsButton.tapAction = { [weak self] in
+    newPrescriptionButton.tapAction = { [weak self] in
       self?.delegate?.didTapNewPrescriptionButton()
     }
   }

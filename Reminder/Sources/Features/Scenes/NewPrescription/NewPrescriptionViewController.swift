@@ -8,9 +8,9 @@
 import Foundation
 import UIKit
 
-class NewReceiptViewController: UIViewController {
-  private let newReceiptView: NewReceiptView
-  private weak var flowDelegate: NewReceiptFlowDelegate?
+class NewPrescriptionViewController: UIViewController {
+  private let contentView: NewPrescriptionView
+  private weak var flowDelegate: NewPrescriptionFlowDelegate?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -20,7 +20,7 @@ class NewReceiptViewController: UIViewController {
   
   private func setupView() {
     view.backgroundColor = Colors.gray800
-    view.addSubview(newReceiptView)
+    view.addSubview(contentView)
     
     setupConstraints()
     setupNavigationBar()
@@ -31,15 +31,15 @@ class NewReceiptViewController: UIViewController {
   }
 
   private func setupConstraints() {
-    setupContentViewToBounds(contentView: newReceiptView)
+    setupContentViewToBounds(contentView: contentView)
   }
   
   private func setupActions() {
     
   }
   
-  init(contentView: NewReceiptView, flowDelegate: NewReceiptFlowDelegate) {
-    self.newReceiptView = contentView
+  init(contentView: NewPrescriptionView, flowDelegate: NewPrescriptionFlowDelegate) {
+    self.contentView = contentView
     self.flowDelegate = flowDelegate
     super.init(nibName: nil, bundle: nil)
   }

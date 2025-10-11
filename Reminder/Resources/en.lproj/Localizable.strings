@@ -28,12 +28,12 @@
 
 /* MARK: - NewReceipt Screen */
 
-"newPrescriptions.title" = "Nova receita";
-"newPrescriptions.description.short" = "Cadastre novos lembretes de receitas";
-"newPrescriptions.description.long" = "Adicione a sua prescrição médica para receber lembretes de quando tomar seu medicamento";
-"newPrescriptions.add.button.title" = "Adicionar";
-"newPrescriptions.medicine.title" = "Remédio";
-"newPrescriptions.medicine.placeholder" = "Nome do medicamento";
-"newPrescriptions.hour.title" = "Hour";
-"newPrescriptions.recorrency.title" = "Recorrência";
-"newPrescriptions.useNow.title" = "Usar agora";
+"newPrescription.title" = "Nova receita";
+"newPrescription.description.short" = "Cadastre novos lembretes de receitas";
+"newPrescription.description.long" = "Adicione a sua prescrição médica para receber lembretes de quando tomar seu medicamento";
+"newPrescription.add.button.title" = "Adicionar";
+"newPrescription.medicine.title" = "Remédio";
+"newPrescription.medicine.placeholder" = "Nome do medicamento";
+"newPrescription.hour.title" = "Hour";
+"newPrescription.recorrency.title" = "Recorrência";
+"newPrescription.useNow.title" = "Usar agora";
