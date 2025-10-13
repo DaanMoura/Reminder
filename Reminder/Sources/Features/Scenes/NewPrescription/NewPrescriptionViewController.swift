@@ -10,6 +10,7 @@ import UIKit
 
 class NewPrescriptionViewController: UIViewController {
   private let contentView: NewPrescriptionView
+  private let viewModel = NewPrescriptionViewModel()
   private weak var flowDelegate: NewPrescriptionFlowDelegate?
   
   override func viewDidLoad() {
@@ -35,7 +36,22 @@ class NewPrescriptionViewController: UIViewController {
   }
   
   private func setupActions() {
+    contentView.addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
+  }
+  
+  @objc
+  private func addButtonTapped() {
+    let medicine = contentView.medicineInput.getText()
+    let time = "13:00" // TODO
+    let recurrence = "Daily" // TODO
+    let takeNow = false // TODO
     
+    viewModel.addPrescription(medicine: medicine,
+                              time: time,
+                              recurrence: recurrence,
+                              takeNow: takeNow)
+    
+    print("receita \(medicine) adicionada")
   }
   
   init(contentView: NewPrescriptionView, flowDelegate: NewPrescriptionFlowDelegate) {

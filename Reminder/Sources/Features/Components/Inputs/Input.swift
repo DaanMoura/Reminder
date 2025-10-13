@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 public class Input: UIView {
-  private let titleLabel: UILabel = {
+  internal let titleLabel: UILabel = {
     let label = UILabel()
     label.font = Typography.label
     label.textColor = Colors.gray100
@@ -17,7 +17,7 @@ public class Input: UIView {
     return label
   }()
   
-  private let textField: UITextField = {
+  internal let textField: UITextField = {
     let textField = UITextFieldWithPadding()
     textField.font = Typography.input
     textField.textColor = Colors.gray100

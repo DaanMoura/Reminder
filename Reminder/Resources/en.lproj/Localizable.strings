@@ -35,5 +35,5 @@
 "newPrescription.medicine.title" = "Remédio";
 "newPrescription.medicine.placeholder" = "Nome do medicamento";
 "newPrescription.hour.title" = "Hour";
-"newPrescription.recorrency.title" = "Recorrência";
-"newPrescription.useNow.title" = "Usar agora";
+"newPrescription.recurrence.title" = "Recorrência";
+"newPrescription.takeNow.title" = "Usar agora";

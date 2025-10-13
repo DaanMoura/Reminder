@@ -37,62 +37,51 @@ class NewPrescriptionView: UIView {
     return label
   }()
   
-  private let medicineInput = Input(
+  internal let medicineInput = Input(
     title: "newPrescription.medicine.title".localized,
     placeholder: "newPrescription.medicine.placeholder".localized
   )
   
-  private let hourLabel: UILabel = {
-    let label = UILabel()
-    label.text = "newPrescription.hour.title".localized
-    label.font = Typography.label
-    label.textColor = Colors.gray100
-    label.translatesAutoresizingMaskIntoConstraints = false
-    return label
-  }()
+  internal let timeInput = Input(
+    title: "newPrescription.time.title".localized,
+    placeholder: "newPrescription.time.placeholder".localized
+  )
   
-  private let hourTimePicker: UIDatePicker = {
+  private let timePicker: UIDatePicker = {
     let timePicker = UIDatePicker()
-    timePicker.datePickerMode = .time
+    timePicker.datePickerMode = .dateAndTime
+    timePicker.preferredDatePickerStyle = .wheels
     timePicker.translatesAutoresizingMaskIntoConstraints = false
     return timePicker
   }()
   
-  private let recorrencyLabel: UILabel = {
-    let label = UILabel()
-    label.text = "newPrescription.recorrency.title".localized
-    label.font = Typography.label
-    label.textColor = Colors.gray100
-    label.translatesAutoresizingMaskIntoConstraints = false
-    return label
+  internal let recurrenceInput = Input(
+    title: "newPrescription.recurrence.title".localized,
+    placeholder: "newPrescription.recurrence.placeholder".localized
+  )
+  
+  private let recurrencePicker: UIPickerView = {
+    let picker = UIPickerView()
+    picker.translatesAutoresizingMaskIntoConstraints = false
+    return picker
   }()
   
-  // TODO: Recorrency select
+  let recurrenceOptions = [
+    "De hora em hora",
+    "2 em 2 horas",
+    "4 em 4 horas",
+    "6 em 6 horas",
+    "8 em 8 horas",
+    "12 em 12 horas",
+    "1 por dia"
+  ]
   
-//  private let useNowCheckbox: UIButton = {
-//    let button = UIButton(type: .system)
-//    let checkImage = UIImage(systemName: "checkmark")
-//    button.setImage(checkImage, for: .selected)
-//    button.layer.cornerRadius = Metrics.tiny
-//    button.translatesAutoresizingMaskIntoConstraints = false
-//    return button
-//  }()
-//  
-//  private let useNowLabel: UILabel = {
-//    let label = UILabel()
-//    label.text = "newPrescription.useNow.title".localized
-//    label.font = Typography.input
-//    label.textColor = Colors.gray200
-//    label.translatesAutoresizingMaskIntoConstraints = false
-//    return label
-//  }()
-  
-  private let useNowCheckbox: Checkbox = {
-    let checkbox = Checkbox(title: "newPrescription.useNow.title".localized)
+  private let takeNowCheckbox: Checkbox = {
+    let checkbox = Checkbox(title: "newPrescription.takeNow.title".localized)
     return checkbox
   }()
   
-  private let addButton: Button = {
+  internal let addButton: Button = {
     let button = Button()
     let buttonImage = UIImage(systemName: "plus")
     button.setImage(buttonImage, for: .normal)
@@ -107,14 +96,16 @@ class NewPrescriptionView: UIView {
     addSubview(descriptionLabel)
     
     addSubview(medicineInput)
-    addSubview(hourLabel)
-    addSubview(hourTimePicker)
-//    addSubview(recorrencyLabel)
-    addSubview(useNowCheckbox)
-//    addSubview(useNowLabel)
+    addSubview(timeInput)
+//    addSubview(hourLabel)
+//    addSubview(hourTimePicker)
+//    addSubview(recurrenceLabel)
+    addSubview(takeNowCheckbox)
     
     addSubview(addButton)
-    
+   
+    setupTimeInput()
+    setupRecurrenceInput()
     setupConstraints()
   }
   
@@ -132,26 +123,70 @@ class NewPrescriptionView: UIView {
       medicineInput.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: Metrics.larger),
       medicineInput.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
       medicineInput.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
+      
+      timeInput.topAnchor.constraint(equalTo: medicineInput.bottomAnchor, constant: Metrics.larger),
+      timeInput.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
+      timeInput.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
 
-      hourLabel.topAnchor.constraint(equalTo: medicineInput.bottomAnchor, constant: Metrics.medium),
-      hourLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
-      hourLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
-      
-      hourTimePicker.topAnchor.constraint(equalTo: hourLabel.bottomAnchor, constant: Metrics.tiny),
-      hourTimePicker.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
-      hourTimePicker.heightAnchor.constraint(equalToConstant: Metrics.inputHeight),
-      
 //      TODO: add recorrency constraints
       
-      useNowCheckbox.topAnchor.constraint(equalTo: hourTimePicker.bottomAnchor, constant: Metrics.medium),
-//      useNowCheckbox.topAnchor.constraint(equalTo: medicineTextField.bottomAnchor, constant: Metrics.small),
-      useNowCheckbox.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
-//      useNowCheckbox.widthAnchor.constraint(equalToConstant: Metrics.medium),
-//      useNowCheckbox.heightAnchor.constraint(equalToConstant: Metrics.medium),
-      
-//      useNowLabel.centerYAnchor.constraint(equalTo: useNowCheckbox.centerYAnchor),
-//      useNowLabel.leadingAnchor.constraint(equalTo: useNowCheckbox.trailingAnchor, constant: Metrics.small)
+      takeNowCheckbox.topAnchor.constraint(equalTo: timeInput.bottomAnchor, constant: Metrics.medium),
+      takeNowCheckbox.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
     ])
+  }
+  
+  private func setupTimeInput() {
+    let toolbar = UIToolbar()
+    toolbar.sizeToFit()
+    
+    let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(didSelectTime))
+    toolbar.setItems([doneButton], animated: true)
+   
+    timeInput.textField.inputView = timePicker
+    timeInput.textField.inputAccessoryView = toolbar
+  }
+  
+  @objc
+  private func didSelectTime() {
+    let formatter = DateFormatter()
+    formatter.timeStyle = .short
+    timeInput.textField.text = formatter.string(from: timePicker.date)
+    timeInput.textField.resignFirstResponder()
+  }
+  
+  private func setupRecurrenceInput() {
+    let toolbar = UIToolbar()
+    toolbar.sizeToFit()
+    
+    let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(didSelectRecurrence))
+    toolbar.setItems([doneButton], animated: true)
+    
+    recurrenceInput.textField.inputView = recurrencePicker
+    recurrenceInput.textField.inputAccessoryView = toolbar
+    
+    recurrencePicker.delegate = self
+    recurrencePicker.dataSource = self
+  }
+  
+  @objc
+  private func didSelectRecurrence() {
+    let selectedRow = recurrencePicker.selectedRow(inComponent: 0)
+    recurrenceInput.textField.text = recurrenceOptions[selectedRow]
+    recurrenceInput.resignFirstResponder()
+  }
+}
+
+extension NewPrescriptionView: UIPickerViewDelegate, UIPickerViewDataSource {
+  func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    return 1
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    return recurrenceOptions.count
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    return recurrenceOptions[row]
   }
 }
 

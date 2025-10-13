@@ -29,10 +29,11 @@ class DBHelper {
   
   private func createTable() {
     let createTableQuery = """
-      CREATE TABLE IF NOT EXISTS Receipts (
+      CREATE TABLE IF NOT EXISTS Prescriptions (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         medicine TEXT,
-        recurrency TEXT,
+        time TEXT,
+        recurrence TEXT,
         takeNow INTEGER
       );
       """
@@ -50,7 +51,25 @@ class DBHelper {
     sqlite3_finalize(statement)
   }
   
-  func insertPrescription () {
+  func insertPrescription (medicine: String, time: String, recurrence: String, takeNow: Bool) {
+    let insertQuery = "INSERT INTO Prescriptions (medicine, time, recurrence, takeNow) VALUES (?, ?, ?, ?);"
+    var statement: OpaquePointer?
     
+    if sqlite3_prepare_v2(db, insertQuery, -1, &statement, nil) == SQLITE_OK {
+      sqlite3_bind_text(statement, 1, (medicine as NSString).utf8String, -1, nil)
+      sqlite3_bind_text(statement, 2, (time as NSString).utf8String, -1, nil)
+      sqlite3_bind_text(statement, 3, (recurrence as NSString).utf8String, -1, nil)
+      sqlite3_bind_int(statement, 4, (takeNow ? 1 : 0))
+      
+      if sqlite3_step(statement) == SQLITE_DONE {
+        print("Receita inserida com sucesso!")
+      } else {
+        print("Falha ao inserir receita na tabela")
+      }
+    } else {
+      print("INSERT statement falhou")
+    }
+    
+    sqlite3_finalize(statement)
   }
 }
