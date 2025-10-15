@@ -21,24 +21,9 @@ class HomeView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
   
-  private let profileBackground: UIView = {
-    let view = UIView()
-    view.backgroundColor = Colors.gray600
-    view.translatesAutoresizingMaskIntoConstraints = false
-    return view
-  }()
+  private let profileBackground = HeaderBackground()
   
-  private let contentBackground: UIView = {
-    let view = UIView()
-    view.layer.cornerRadius = Metrics.medium
-    view.layer.masksToBounds = false
-    view.backgroundColor = Colors.gray800
-    view.layer.shadowColor = Colors.gray200.cgColor
-    view.layer.shadowRadius = 24
-    view.layer.shadowOpacity = 0.25
-    view.translatesAutoresizingMaskIntoConstraints = false
-    return view
-  }()
+  private let contentBackground = ContentBackground()
   
   internal let profileImage: UIImageView = {
     let imageView = UIImageView()
@@ -132,19 +117,17 @@ class HomeView: UIView {
     
     setupConstraints()
     setupImageGesture()
-    setupActionForNewPrescriptionButton()
+    setupActions()
   }
   
   private func setupConstraints() {
     feedbackButton.setupDefaultConstraints(to: self)
+    profileBackground.setupDefaultConstraints(to: self)
+    contentBackground.setupDefaultConstraints(to: self, top: profileBackground)
+    
     NSLayoutConstraint.activate([
       //MARK: - Profile background constrainsts
       
-      profileBackground.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-      profileBackground.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-      profileBackground.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-      profileBackground.heightAnchor.constraint(equalToConstant: Metrics.backgroundProfileSize),
-        
       profileImage.topAnchor.constraint(equalTo: profileBackground.topAnchor, constant: Metrics.small),
       profileImage.leadingAnchor.constraint(equalTo: profileBackground.leadingAnchor, constant: Metrics.large),
       profileImage.widthAnchor.constraint(equalToConstant: Metrics.profileImageSize),
@@ -160,11 +143,6 @@ class HomeView: UIView {
       nameTextField.leadingAnchor.constraint(equalTo: profileBackground.leadingAnchor, constant: Metrics.large),
       
       //MARK: - Content background constraints
-      
-      contentBackground.topAnchor.constraint(equalTo: profileBackground.bottomAnchor),
-      contentBackground.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-      contentBackground.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-      contentBackground.bottomAnchor.constraint(equalTo: self.bottomAnchor),
       
       myPrescriptionsButton.topAnchor.constraint(equalTo: contentBackground.topAnchor, constant: Metrics.large),
       myPrescriptionsButton.leadingAnchor.constraint(equalTo: contentBackground.leadingAnchor, constant: Metrics.medium),
@@ -186,11 +164,16 @@ class HomeView: UIView {
     profileImage.addGestureRecognizer(tapGestureRecognizer)
   }
   
-  private func setupActionForNewPrescriptionButton() {
+  private func setupActions() {
     newPrescriptionButton.tapAction = { [weak self] in
       self?.delegate?.didTapNewPrescriptionButton()
     }
+    
+    myPrescriptionsButton.tapAction = { [weak self] in
+      self?.delegate?.didTapMyPrescriptionsButton()
+    }
   }
+  
   
   @objc
   private func onLogoutButtonTap() {

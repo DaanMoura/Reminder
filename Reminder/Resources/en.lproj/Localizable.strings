@@ -34,6 +34,8 @@
 "newPrescription.add.button.title" = "Adicionar";
 "newPrescription.medicine.title" = "Remédio";
 "newPrescription.medicine.placeholder" = "Nome do medicamento";
-"newPrescription.hour.title" = "Hour";
+"newPrescription.time.title" = "Horário";
+"newPrescription.time.placeholder" = "Selecione um horário";
 "newPrescription.recurrence.title" = "Recorrência";
+"newPrescription.recurrence.placeholder" = "Selecione uma recorrência";
 "newPrescription.takeNow.title" = "Usar agora";

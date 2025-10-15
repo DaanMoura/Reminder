@@ -51,7 +51,6 @@ class NewPrescriptionView: UIView {
     let timePicker = UIDatePicker()
     timePicker.datePickerMode = .dateAndTime
     timePicker.preferredDatePickerStyle = .wheels
-    timePicker.translatesAutoresizingMaskIntoConstraints = false
     return timePicker
   }()
   
@@ -62,7 +61,6 @@ class NewPrescriptionView: UIView {
   
   private let recurrencePicker: UIPickerView = {
     let picker = UIPickerView()
-    picker.translatesAutoresizingMaskIntoConstraints = false
     return picker
   }()
   
@@ -97,9 +95,7 @@ class NewPrescriptionView: UIView {
     
     addSubview(medicineInput)
     addSubview(timeInput)
-//    addSubview(hourLabel)
-//    addSubview(hourTimePicker)
-//    addSubview(recurrenceLabel)
+    addSubview(recurrenceInput)
     addSubview(takeNowCheckbox)
     
     addSubview(addButton)
@@ -107,6 +103,8 @@ class NewPrescriptionView: UIView {
     setupTimeInput()
     setupRecurrenceInput()
     setupConstraints()
+    setupObservers()
+    validateForm()
   }
   
   private func setupConstraints() {
@@ -127,23 +125,51 @@ class NewPrescriptionView: UIView {
       timeInput.topAnchor.constraint(equalTo: medicineInput.bottomAnchor, constant: Metrics.larger),
       timeInput.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
       timeInput.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
-
-//      TODO: add recorrency constraints
       
-      takeNowCheckbox.topAnchor.constraint(equalTo: timeInput.bottomAnchor, constant: Metrics.medium),
+      recurrenceInput.topAnchor.constraint(equalTo: timeInput.bottomAnchor, constant: Metrics.larger),
+      recurrenceInput.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
+      recurrenceInput.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Metrics.large),
+
+      takeNowCheckbox.topAnchor.constraint(equalTo: recurrenceInput.bottomAnchor, constant: Metrics.medium),
       takeNowCheckbox.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Metrics.large),
     ])
   }
   
-  private func setupTimeInput() {
-    let toolbar = UIToolbar()
-    toolbar.sizeToFit()
+  private func validateForm() {
+    let isMedicineFilled = !(medicineInput.textField.text ?? "").isEmpty
+    let isTimeFilled = !(timeInput.textField.text ?? "").isEmpty
+    let isRecurrenceFilled = !(recurrenceInput.textField.text ?? "").isEmpty
     
+    
+    let isValid = isMedicineFilled && isTimeFilled && isRecurrenceFilled
+    print("validateForm > isValid \(isValid)")
+    addButton.isEnabled = isValid
+  }
+  
+  private func setupObservers() {
+    medicineInput.textField.addTarget(self, action: #selector(inputDidChange), for: .editingChanged)
+    timeInput.textField.addTarget(self, action: #selector(inputDidChange), for: .editingDidEnd)
+    recurrenceInput.textField.addTarget(self, action: #selector(inputDidChange), for: .editingDidEnd)
+  }
+  
+  @objc
+  private func inputDidChange() {
+      validateForm()
+  }
+  
+  private func setupTimeInput() {
+    let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 0, height: 44))
+    
+    let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(didSelectTime))
-    toolbar.setItems([doneButton], animated: true)
+    toolbar.setItems([flexibleSpace, doneButton], animated: true)
    
     timeInput.textField.inputView = timePicker
     timeInput.textField.inputAccessoryView = toolbar
+    
+    let assistant = timeInput.textField.inputAssistantItem
+    assistant.leadingBarButtonGroups = []
+    assistant.trailingBarButtonGroups = []
   }
   
   @objc
@@ -155,14 +181,18 @@ class NewPrescriptionView: UIView {
   }
   
   private func setupRecurrenceInput() {
-    let toolbar = UIToolbar()
-    toolbar.sizeToFit()
+    let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 0, height: 44))
     
+    let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(didSelectRecurrence))
-    toolbar.setItems([doneButton], animated: true)
+    toolbar.setItems([flexibleSpace, doneButton], animated: true)
     
     recurrenceInput.textField.inputView = recurrencePicker
     recurrenceInput.textField.inputAccessoryView = toolbar
+    
+    let assistant = recurrenceInput.textField.inputAssistantItem
+    assistant.leadingBarButtonGroups = []
+    assistant.trailingBarButtonGroups = []
     
     recurrencePicker.delegate = self
     recurrencePicker.dataSource = self
@@ -172,7 +202,7 @@ class NewPrescriptionView: UIView {
   private func didSelectRecurrence() {
     let selectedRow = recurrencePicker.selectedRow(inComponent: 0)
     recurrenceInput.textField.text = recurrenceOptions[selectedRow]
-    recurrenceInput.resignFirstResponder()
+    recurrenceInput.textField.resignFirstResponder()
   }
 }
 

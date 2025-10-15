@@ -102,6 +102,10 @@ extension HomeViewController: HomeViewDelegate {
   func didTapNewPrescriptionButton() {
     self.flowDelegate?.navigateToNewPrescription()
   }
+  
+  func didTapMyPrescriptionsButton() {
+    self.flowDelegate?.navigateToMyPrescriptions()
+  }
 }
 
 //MARK: Image Picker (deprecated)

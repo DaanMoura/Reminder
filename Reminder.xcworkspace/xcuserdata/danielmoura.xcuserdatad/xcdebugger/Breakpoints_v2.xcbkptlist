@@ -14,8 +14,8 @@
             filePath = "Reminder/Sources/Features/Scenes/Home/HomeView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
             landmarkName = "setupConstraints()"
             landmarkType = "7">
          </BreakpointContent>

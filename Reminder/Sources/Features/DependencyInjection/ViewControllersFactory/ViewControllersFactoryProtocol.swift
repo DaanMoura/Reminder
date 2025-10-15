@@ -12,4 +12,5 @@ protocol ViewControllersFactoryProtocol: AnyObject {
   func makeLoginBottomSheetViewController(flowDelegate: LoginBottomSheetFlowDelegate) -> LoginBottomSheetViewController
   func makeHomeViewController(flowDelegate: HomeFlowDelegate) -> HomeViewController
   func makeNewPrescriptionViewController(flowDelegate: NewPrescriptionFlowDelegate) -> NewPrescriptionViewController
+  func makeMyPrescriptionsViewController(flowDelegate: MyPrescriptionsFlowDelegate) -> MyPrescriptionsViewController
 }

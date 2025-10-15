@@ -52,18 +52,25 @@ extension ReminderFlowController: HomeFlowDelegate {
     self.openLoginBottomSheet()
   }
   
-  func navigateToRecipes() {
-    // TODO
+  func navigateToMyPrescriptions() {
+    let myPrescriptionsViewController = viewControllersFactory.makeMyPrescriptionsViewController(flowDelegate: self)
+    self.navigationController?.pushViewController(myPrescriptionsViewController, animated: true)
   }
   
   func navigateToNewPrescription() {
-    let newReceiptViewController = viewControllersFactory.makeNewPrescriptionViewController(flowDelegate: self)
-    self.navigationController?.pushViewController(newReceiptViewController, animated: true)
+    let newPrescriptionViewController = viewControllersFactory.makeNewPrescriptionViewController(flowDelegate: self)
+    self.navigationController?.pushViewController(newPrescriptionViewController, animated: true)
   }
+}
+
+//MARK: - My prescriptions
+extension ReminderFlowController: MyPrescriptionsFlowDelegate {
+  
 }
 
 //MARK: - New Receipt
 extension ReminderFlowController: NewPrescriptionFlowDelegate {
   
 }
+
 

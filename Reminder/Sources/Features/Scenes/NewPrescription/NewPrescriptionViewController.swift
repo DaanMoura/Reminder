@@ -42,8 +42,8 @@ class NewPrescriptionViewController: UIViewController {
   @objc
   private func addButtonTapped() {
     let medicine = contentView.medicineInput.getText()
-    let time = "13:00" // TODO
-    let recurrence = "Daily" // TODO
+    let time = contentView.timeInput.getText()
+    let recurrence = contentView.recurrenceInput.getText()
     let takeNow = false // TODO
     
     viewModel.addPrescription(medicine: medicine,
