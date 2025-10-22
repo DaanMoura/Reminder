@@ -8,7 +8,7 @@
 import Foundation
 
 class NewPrescriptionViewModel {
-  func addPrescription(medicine: String, time: String, recurrence: String, takeNow: Bool) {
-    DBHelper.shared.insertPrescription(medicine: medicine, time: time, recurrence: recurrence, takeNow: takeNow)
+  func addPrescription(prescription: Prescription) {
+    DBHelper.shared.insertPrescription(prescription: prescription)
   }
 }

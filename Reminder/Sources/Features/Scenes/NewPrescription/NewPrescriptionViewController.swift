@@ -46,10 +46,13 @@ class NewPrescriptionViewController: UIViewController {
     let recurrence = contentView.recurrenceInput.getText()
     let takeNow = false // TODO
     
-    viewModel.addPrescription(medicine: medicine,
-                              time: time,
-                              recurrence: recurrence,
-                              takeNow: takeNow)
+    let prescription = Prescription(id: "",
+                                    medicine: medicine,
+                                    time: time,
+                                    recurrence: recurrence,
+                                    takeNow: takeNow)
+    
+    viewModel.addPrescription(prescription: prescription)
     
     print("receita \(medicine) adicionada")
   }

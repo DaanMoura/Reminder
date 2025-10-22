@@ -24,7 +24,8 @@
 /* MARK: - Receipts Screen */
 
 "myPrescriptions.title" = "Minhas receitas";
-"myPrescriptions.description" = "Acompanhe os medicamentos e gerencie lembretes";
+"myPrescriptions.description.short" = "Acompanhe os medicamentos e gerencie lembretes";
+"myPrescriptions.description.long" = "Adicione a sua prescrição médica para receber lembretes de quando tomar seu medicamento";
 
 /* MARK: - NewReceipt Screen */
 

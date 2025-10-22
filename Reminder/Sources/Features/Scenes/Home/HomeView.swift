@@ -41,10 +41,10 @@ class HomeView: UIView {
   private let logoutIconButton: UIButton = {
     let button = UIButton(type: .system)
     button.tintColor = Colors.primaryRedBase
-    button.configuration = .prominentClearGlass()
+    button.configuration = .clearGlass()
     button.configuration?.baseForegroundColor = Colors.primaryRedBase
-    button.configuration?.contentInsets = NSDirectionalEdgeInsets(top: Metrics.small, leading: Metrics.medium, bottom: Metrics.small, trailing: Metrics.medium)
-    button.configuration?.buttonSize = .medium
+    button.configuration?.contentInsets = NSDirectionalEdgeInsets(top: Metrics.small, leading: 28, bottom: Metrics.small, trailing: Metrics.medium)
+    button.configuration?.buttonSize = .large
     button.configuration?.imagePadding = Metrics.iconButtonPadding
     button.setImage(UIImage(systemName: "rectangle.portrait.and.arrow.right"),
                     for: .normal)
@@ -52,6 +52,7 @@ class HomeView: UIView {
     button.translatesAutoresizingMaskIntoConstraints = false
     button.addTarget(self, action: #selector(onLogoutButtonTap), for: .touchUpInside)
     return button
+    
   }()
   
   private let welcomeLabel: UILabel = {
@@ -76,7 +77,7 @@ class HomeView: UIView {
     let buttonHomeView = ButtonHomeView(
       icon: UIImage(named: "paper-icon"),
       title: "myPrescriptions.title".localized,
-      description: "myPrescriptions.description".localized,
+      description: "myPrescriptions.description.short".localized,
     )
     return buttonHomeView
   }()
@@ -128,12 +129,12 @@ class HomeView: UIView {
     NSLayoutConstraint.activate([
       //MARK: - Profile background constrainsts
       
-      profileImage.topAnchor.constraint(equalTo: profileBackground.topAnchor, constant: Metrics.small),
+      profileImage.topAnchor.constraint(equalTo: profileBackground.topAnchor),
       profileImage.leadingAnchor.constraint(equalTo: profileBackground.leadingAnchor, constant: Metrics.large),
       profileImage.widthAnchor.constraint(equalToConstant: Metrics.profileImageSize),
       profileImage.heightAnchor.constraint(equalToConstant: Metrics.profileImageSize),
       
-      logoutIconButton.topAnchor.constraint(equalTo: profileBackground.topAnchor, constant: Metrics.small),
+      logoutIconButton.topAnchor.constraint(equalTo: profileBackground.topAnchor),
       logoutIconButton.trailingAnchor.constraint(equalTo: profileBackground.trailingAnchor, constant: -Metrics.large),
       
       welcomeLabel.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: Metrics.medium),

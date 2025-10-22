@@ -8,5 +8,7 @@
 import Foundation
 
 class MyPrescriptionsViewModel {
-  
+  func fetchData() -> [Prescription] {
+    return DBHelper.shared.fetchPrescriptions()
+  }
 }
