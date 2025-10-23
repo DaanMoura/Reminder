@@ -8,7 +8,7 @@
 import Foundation
 
 struct Prescription: Codable {
-  let id: String
+  let id: Int
   let medicine: String
   let time: String
   let recurrence: String

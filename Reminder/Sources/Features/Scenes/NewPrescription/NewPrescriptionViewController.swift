@@ -7,12 +7,22 @@
 
 import Foundation
 import UIKit
+import Lottie
 
 class NewPrescriptionViewController: UIViewController {
   private let contentView: NewPrescriptionView
   private let viewModel = NewPrescriptionViewModel()
   private weak var flowDelegate: NewPrescriptionFlowDelegate?
   
+  private let successAnimationView: LottieAnimationView = {
+    let animationView = LottieAnimationView(name: "success")
+    animationView.contentMode = .scaleAspectFit
+    animationView.loopMode = .playOnce
+    animationView.translatesAutoresizingMaskIntoConstraints = false
+    animationView.isHidden = true
+    return animationView
+  }()
+
   override func viewDidLoad() {
     super.viewDidLoad()
     setupView()
@@ -22,6 +32,7 @@ class NewPrescriptionViewController: UIViewController {
   private func setupView() {
     view.backgroundColor = Colors.gray800
     view.addSubview(contentView)
+    view.addSubview(successAnimationView)
     
     setupConstraints()
     setupNavigationBar()
@@ -33,6 +44,10 @@ class NewPrescriptionViewController: UIViewController {
 
   private func setupConstraints() {
     setupContentViewToBounds(contentView: contentView)
+    NSLayoutConstraint.activate([
+      successAnimationView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      successAnimationView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+    ])
   }
   
   private func setupActions() {
@@ -46,15 +61,28 @@ class NewPrescriptionViewController: UIViewController {
     let recurrence = contentView.recurrenceInput.getText()
     let takeNow = false // TODO
     
-    let prescription = Prescription(id: "",
+    let prescription = Prescription(id: 0,
                                     medicine: medicine,
                                     time: time,
                                     recurrence: recurrence,
                                     takeNow: takeNow)
     
     viewModel.addPrescription(prescription: prescription)
+    playSuccessAnimation()
+    contentView.medicineInput.textField.text = ""
+    contentView.timeInput.textField.text = ""
+    contentView.recurrenceInput.textField.text = ""
     
     print("receita \(medicine) adicionada")
+  }
+  
+  private func playSuccessAnimation() {
+    successAnimationView.isHidden = false
+    successAnimationView.play { [weak self] finished in
+      if finished {
+        self?.successAnimationView.isHidden = true
+      }
+    }
   }
   
   init(contentView: NewPrescriptionView, flowDelegate: NewPrescriptionFlowDelegate) {

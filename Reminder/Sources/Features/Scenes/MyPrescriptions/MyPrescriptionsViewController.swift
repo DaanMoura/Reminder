@@ -75,7 +75,7 @@ class MyPrescriptionsViewController: UIViewController {
   
   @objc
   private func addPrescriptionButtonTapped() {
-    
+    self.flowDelegate?.navigateToNewPrescription()
   }
   
   private func loadData() {
@@ -94,6 +94,19 @@ extension MyPrescriptionsViewController: UITableViewDataSource {
     let cell = tableView.dequeueReusableCell(withIdentifier: PrescriptionCell.identifier, for: indexPath) as! PrescriptionCell
     let prescription = prescriptions[indexPath.section]
     cell.configure(prescription: prescription)
+    cell.onDelete = { [weak self] in
+      guard let self = self else { return }
+      
+      if let actualIndexPath = tableView.indexPath(for: cell) {
+        if actualIndexPath.section < self.prescriptions.count {
+          self.viewModel.deletePrescription(byId: prescription.id)
+          self.prescriptions.remove(at: actualIndexPath.row)
+          tableView.deleteSections(IndexSet(integer: actualIndexPath.section), with: .automatic)
+        } else {
+          print("Erro ao excluir uma seção invalida")
+        }
+      }
+    }
     return cell
   }
 }

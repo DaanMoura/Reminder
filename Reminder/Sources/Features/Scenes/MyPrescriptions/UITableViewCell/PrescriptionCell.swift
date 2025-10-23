@@ -11,6 +11,8 @@ import UIKit
 class PrescriptionCell: UITableViewCell {
   static let identifier = "PrescriptionCell"
   
+  var onDelete: (() -> Void)?
+  
   private let titleLabel: UILabel = {
     let label = UILabel()
     label.font = Typography.subheading
@@ -30,6 +32,8 @@ class PrescriptionCell: UITableViewCell {
 //    button.configuration = .glass()
     button.tintColor = Colors.primaryRedBase
     button.configuration?.preferredSymbolConfigurationForImage = .init(pointSize: 12, weight: .heavy)
+    
+    button.addTarget(self, action: #selector(trashButtonTapped), for: .touchUpInside)
     
     button.translatesAutoresizingMaskIntoConstraints = false
     return button
@@ -81,6 +85,11 @@ class PrescriptionCell: UITableViewCell {
     titleLabel.text = prescription.medicine
     timeChip.setText(text: prescription.time)
     recurrenceChip.setText(text: prescription.recurrence)
+  }
+  
+  @objc
+  private func trashButtonTapped() {
+    onDelete?()
   }
 
 }

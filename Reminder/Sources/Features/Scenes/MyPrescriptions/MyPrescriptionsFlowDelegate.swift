@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol MyPrescriptionsFlowDelegate: AnyObject {
-  
+  func navigateToNewPrescription()
 }

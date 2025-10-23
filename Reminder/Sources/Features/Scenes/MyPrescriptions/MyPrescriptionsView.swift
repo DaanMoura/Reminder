@@ -24,6 +24,7 @@ class MyPrescriptionsView: UIView {
   
   private let contentBackground = ContentBackground()
   
+  
   private let titleLabel: UILabel = {
     let label = UILabel()
     label.text = "myPrescriptions.title".localized
@@ -85,5 +86,4 @@ class MyPrescriptionsView: UIView {
       tableView.bottomAnchor.constraint(equalTo: contentBackground.bottomAnchor)
     ])
   }
-  
 }

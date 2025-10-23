@@ -17,7 +17,7 @@ class NewPrescriptionView: UIView {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  
+
   private let titleLabel: UILabel = {
     let label = UILabel()
     label.text = "newPrescription.title".localized

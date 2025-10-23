@@ -11,4 +11,8 @@ class MyPrescriptionsViewModel {
   func fetchData() -> [Prescription] {
     return DBHelper.shared.fetchPrescriptions()
   }
+  
+  func deletePrescription(byId id: Int) {
+    DBHelper.shared.deletePrescription(byId: id)
+  }
 }
