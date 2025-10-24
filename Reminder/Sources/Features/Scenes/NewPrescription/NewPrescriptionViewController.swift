@@ -64,16 +64,21 @@ class NewPrescriptionViewController: UIViewController {
     let prescription = Prescription(id: 0,
                                     medicine: medicine,
                                     time: time,
-                                    recurrence: recurrence,
+                                    recurrence: Recurrence(rawValue: recurrence) ?? Recurrence.daily,
                                     takeNow: takeNow)
     
     viewModel.addPrescription(prescription: prescription)
     playSuccessAnimation()
+    clearFields()
+    contentView.addButton.isEnabled = false
+    
+    print("receita \(medicine) adicionada")
+  }
+  
+  private func clearFields() {
     contentView.medicineInput.textField.text = ""
     contentView.timeInput.textField.text = ""
     contentView.recurrenceInput.textField.text = ""
-    
-    print("receita \(medicine) adicionada")
   }
   
   private func playSuccessAnimation() {

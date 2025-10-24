@@ -17,6 +17,8 @@ class NewPrescriptionView: UIView {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+  
+  let recurrenceOptions = Recurrence.allCases
 
   private let titleLabel: UILabel = {
     let label = UILabel()
@@ -64,16 +66,7 @@ class NewPrescriptionView: UIView {
     return picker
   }()
   
-  let recurrenceOptions = [
-    "De hora em hora",
-    "2 em 2 horas",
-    "4 em 4 horas",
-    "6 em 6 horas",
-    "8 em 8 horas",
-    "12 em 12 horas",
-    "1 por dia"
-  ]
-  
+
   private let takeNowCheckbox: Checkbox = {
     let checkbox = Checkbox(title: "newPrescription.takeNow.title".localized)
     return checkbox
@@ -201,7 +194,7 @@ class NewPrescriptionView: UIView {
   @objc
   private func didSelectRecurrence() {
     let selectedRow = recurrencePicker.selectedRow(inComponent: 0)
-    recurrenceInput.textField.text = recurrenceOptions[selectedRow]
+    recurrenceInput.textField.text = recurrenceOptions[selectedRow].rawValue
     recurrenceInput.textField.resignFirstResponder()
   }
 }
@@ -216,7 +209,7 @@ extension NewPrescriptionView: UIPickerViewDelegate, UIPickerViewDataSource {
   }
   
   func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-    return recurrenceOptions[row]
+    return recurrenceOptions[row].rawValue
   }
 }
 

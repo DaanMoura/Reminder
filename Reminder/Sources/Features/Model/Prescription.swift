@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct Prescription: Codable {
+struct Prescription: Decodable {
   let id: Int
   let medicine: String
   let time: String
-  let recurrence: String
+  let recurrence: Recurrence
   let takeNow: Bool
 }
 

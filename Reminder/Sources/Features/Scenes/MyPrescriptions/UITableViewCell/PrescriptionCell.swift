@@ -84,7 +84,7 @@ class PrescriptionCell: UITableViewCell {
   func configure(prescription: Prescription) {
     titleLabel.text = prescription.medicine
     timeChip.setText(text: prescription.time)
-    recurrenceChip.setText(text: prescription.recurrence)
+    recurrenceChip.setText(text: prescription.recurrence.rawValue)
   }
   
   @objc

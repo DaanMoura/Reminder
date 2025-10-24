@@ -58,7 +58,7 @@ class DBHelper {
     if sqlite3_prepare_v2(db, insertQuery, -1, &statement, nil) == SQLITE_OK {
       sqlite3_bind_text(statement, 1, (prescription.medicine as NSString).utf8String, -1, nil)
       sqlite3_bind_text(statement, 2, (prescription.time as NSString).utf8String, -1, nil)
-      sqlite3_bind_text(statement, 3, (prescription.recurrence as NSString).utf8String, -1, nil)
+      sqlite3_bind_text(statement, 3, (prescription.recurrence.rawValue as NSString).utf8String, -1, nil)
       sqlite3_bind_int(statement, 4, (prescription.takeNow ? 1 : 0))
       
       if sqlite3_step(statement) == SQLITE_DONE {
@@ -83,14 +83,14 @@ class DBHelper {
         let id = sqlite3_column_int(statement, 0)
         let medicine = sqlite3_column_text(statement, 1).flatMap { String(cString: $0) } ?? "Unknown"
         let time = sqlite3_column_text(statement, 2).flatMap { String(cString: $0) } ?? "Unknown"
-        let recurrence = sqlite3_column_text(statement, 3).flatMap { String(cString: $0) } ?? "Unknown"
+        let recurrenceRawValue = sqlite3_column_text(statement, 3).flatMap { String(cString: $0) } ?? Recurrence.daily.rawValue
         let takeNow = sqlite3_column_int(statement, 4) == 1
         
         let prescription = Prescription(
           id: Int(id),
           medicine: medicine,
           time: time,
-          recurrence: recurrence,
+          recurrence: Recurrence(rawValue: recurrenceRawValue) ?? Recurrence.daily,
           takeNow: takeNow
         )
         
