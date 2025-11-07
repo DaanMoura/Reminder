@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import Lottie
+import CoreFramework
 
 class NewPrescriptionViewController: UIViewController {
   private let contentView: NewPrescriptionView
@@ -27,6 +28,8 @@ class NewPrescriptionViewController: UIViewController {
     super.viewDidLoad()
     setupView()
     setupActions()
+    let onboarding = OnboardingView()
+    onboarding.presentOnboarding(on: view, with: ["instrução 1", "instrução 2", "instrução 3"])
   }
   
   private func setupView() {
