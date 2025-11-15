@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import CoreFramework
 
 class NewPrescriptionView: UIView {
   override init(frame: CGRect) {
@@ -67,7 +68,7 @@ class NewPrescriptionView: UIView {
   }()
   
 
-  private let takeNowCheckbox: Checkbox = {
+  internal let takeNowCheckbox: Checkbox = {
     let checkbox = Checkbox(title: "newPrescription.takeNow.title".localized)
     return checkbox
   }()

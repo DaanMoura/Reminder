@@ -12,4 +12,5 @@ public protocol HomeViewDelegate: AnyObject {
   func didTapProfileImage()
   func didTapNewPrescriptionButton()
   func didTapMyPrescriptionsButton()
+  func didTapFeedbackButton()
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import CoreFramework
 
 class MyPrescriptionsView: UIView {
   weak public var delegate: MyPrescriptionsViewDelegate?

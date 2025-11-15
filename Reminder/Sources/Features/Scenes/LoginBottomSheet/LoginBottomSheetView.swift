@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import CoreFramework
 
 class LoginBottomSheetView: UIView {
   public weak var delegate: LoginBottomSheetViewDelegate?

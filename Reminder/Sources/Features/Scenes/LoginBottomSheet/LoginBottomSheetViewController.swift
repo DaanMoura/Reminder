@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import LocalAuthentication
 
 //MARK: View Controller
 class LoginBottomSheetViewController: UIViewController {
@@ -126,9 +127,7 @@ class LoginBottomSheetViewController: UIViewController {
     
     let saveAction = UIAlertAction(title: "Salvar",
                                    style: .default) { _ in
-      let user = User(email: email, isUserSaved: true)
-      UserDefaultsManager.saveUser(user: user)
-      self.flowDelegate?.navigateToHome()
+      self.askEnableFaceID(email: email)
     }
     
     let cancelAction = UIAlertAction(title: "Cancelar",
@@ -139,6 +138,40 @@ class LoginBottomSheetViewController: UIViewController {
     alertController.addAction(saveAction)
     alertController.addAction(cancelAction)
     self.present(alertController, animated: true)
+  }
+  
+  private func askEnableFaceID(email: String) {
+    let context = LAContext()
+    var error: NSError?
+    
+    let supportsBiometry = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
+    if supportsBiometry {
+      let alert = UIAlertController(title: "Habilitar o Face ID?",
+                                    message: "Deseja habilitar o login por biometria?",
+                                    preferredStyle: .alert)
+      let yesAction = UIAlertAction(title: "Sim", style: .default) { _ in
+        let user = User(email: email, isUserSaved: true, isFaceIdEnabled: true)
+        UserDefaultsManager.saveUser(user: user)
+        self.flowDelegate?.navigateToHome()
+      }
+      
+      let noAction = UIAlertAction(title: "Não", style: .cancel) { _ in
+        let user = User(email: email, isUserSaved: true, isFaceIdEnabled: false)
+        UserDefaultsManager.saveUser(user: user)
+        self.flowDelegate?.navigateToHome()
+      }
+      
+      alert.addAction(yesAction)
+      alert.addAction(noAction)
+      
+      self.present(alert, animated: true)
+    } else {
+      let user = User(email: email, isUserSaved: true, isFaceIdEnabled: false)
+      UserDefaultsManager.saveUser(user: user)
+      self.flowDelegate?.navigateToHome()
+    }
+    
+    
   }
   
   private func setupGesture() {

@@ -10,6 +10,10 @@ import UserNotifications
 
 class NewPrescriptionViewModel {
   func addPrescription(prescription: Prescription) {
+//    var finalTime = prescription.time
+//    if prescription.takeNow {
+//      let date = Date()
+//    }
     DBHelper.shared.insertPrescription(prescription: prescription)
     scheduleNotifications(prescription: prescription)
   }
@@ -26,7 +30,11 @@ class NewPrescriptionViewModel {
     
     let formatter = DateFormatter()
     formatter.dateFormat = "HH:mm"
-    guard let initialDate = formatter.date(from: prescription.time) else {
+    
+    var finalTime = prescription.time
+    finalTime = formatter.string(from: Date())
+    
+    guard let initialDate = formatter.date(from: finalTime) else {
       return
     }
     
@@ -57,28 +65,6 @@ class NewPrescriptionViewModel {
       
       currentDate = calendar.date(byAdding: .hour, value: interval, to: currentDate) ?? Date()
     }
-    
-    
-//    let initialComponents = calendar.dateComponents([.hour, .minute], from: initialDate)
-//    
-//    let trigger = UNCalendarNotificationTrigger(
-//      dateMatching: initialComponents,
-//      repeats: true
-//    )
-//    
-//    let request = UNNotificationRequest(
-//      identifier: String(prescription.id),
-//      content: content,
-//      trigger: trigger
-//    )
-//    
-//    center.add(request) { error in
-//      if let error = error {
-//        print("Erro ao agendar notificações \(error)")
-//      } else {
-//        print("Notificação para \(prescription.medicine) criada com sucesso!")
-//      }
-//    }
   }
 
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import CoreFramework
 
 class HomeView: UIView {
   public weak var delegate: HomeViewDelegate?
@@ -97,6 +98,7 @@ class HomeView: UIView {
     button.setImage(buttonImage, for: .normal)
     button.setTitle("home.feedback.button.title".localized, for: .normal)
     button.tintColor = Colors.gray100
+    button.addTarget(self, action: #selector(onFeedbackButtonTap), for: .touchUpInside)
     return button
   }()
   
@@ -184,6 +186,11 @@ class HomeView: UIView {
   @objc
   private func onProfileImageTap() {
     delegate?.didTapProfileImage()
+  }
+  
+  @objc
+  private func onFeedbackButtonTap() {
+    delegate?.didTapFeedbackButton()
   }
 }
 

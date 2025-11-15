@@ -28,8 +28,7 @@ class NewPrescriptionViewController: UIViewController {
     super.viewDidLoad()
     setupView()
     setupActions()
-    let onboarding = OnboardingView()
-    onboarding.presentOnboarding(on: view, with: ["instrução 1", "instrução 2", "instrução 3"])
+    presentOnboarding()
   }
   
   private func setupView() {
@@ -62,7 +61,7 @@ class NewPrescriptionViewController: UIViewController {
     let medicine = contentView.medicineInput.getText()
     let time = contentView.timeInput.getText()
     let recurrence = contentView.recurrenceInput.getText()
-    let takeNow = false // TODO
+    let takeNow = contentView.takeNowCheckbox.toggleCheckbox.getIsCheckedState()
     
     let prescription = Prescription(id: 0,
                                     medicine: medicine,
@@ -91,6 +90,24 @@ class NewPrescriptionViewController: UIViewController {
         self?.successAnimationView.isHidden = true
       }
     }
+  }
+  
+  private func presentOnboarding() {
+    
+    if UserDefaultsManager.isOnboardingSeen() {
+      return
+    }
+    
+    let onboarding = OnboardingView()
+    let onboardingSteps: [OnboardingStep] = [
+      (UIImage(systemName: "pills"), "Bem vindo!"),
+      (UIImage(systemName: "pills"), "Veja como é simples cadastrar seu remédio"),
+      (UIImage(systemName: "pills"), "Preencha o nome do remédio, horário e frequência"),
+      (UIImage(systemName: "pills"), "Iremos te lembrar na horar de tomar o seu medicamento!"),
+    ]
+    onboarding.presentOnboarding(on: view, with: onboardingSteps)
+    
+    UserDefaultsManager.markOnboardingSeen()
   }
   
   init(contentView: NewPrescriptionView, flowDelegate: NewPrescriptionFlowDelegate) {

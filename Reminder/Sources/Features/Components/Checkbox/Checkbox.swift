@@ -7,21 +7,13 @@
 
 import Foundation
 import UIKit
+import CoreFramework
 
 public class Checkbox: UIView {
-  private let checkboxButton: UIButton = {
-    let button = UIButton(type: .system)
-    
-    let squareImage = UIImage(systemName: "square")
-    button.setImage(squareImage, for: .normal)
-    
-    let checkImage = UIImage(systemName: "checkmark.square")
-    button.setImage(checkImage, for: .selected)
-    
-    button.tintColor = Colors.gray400
-    button.layer.cornerRadius = Metrics.tiny
-    button.translatesAutoresizingMaskIntoConstraints = false
-    return button
+  public let toggleCheckbox:  ToggleCheckbox = {
+    let checkbox = ToggleCheckbox()
+    checkbox.translatesAutoresizingMaskIntoConstraints = false
+    return checkbox
   }()
   
   private let titleLabel: UILabel = {
@@ -45,7 +37,7 @@ public class Checkbox: UIView {
   }
   
   private func setupView() {
-    addSubview(checkboxButton)
+    addSubview(toggleCheckbox)
     addSubview(titleLabel)
       
     setupConstraints()
@@ -53,18 +45,14 @@ public class Checkbox: UIView {
   
   private func setupConstraints() {
     NSLayoutConstraint.activate([
-      checkboxButton.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-      checkboxButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-      checkboxButton.widthAnchor.constraint(equalToConstant: Metrics.medium),
-      checkboxButton.heightAnchor.constraint(equalToConstant: Metrics.medium),
+      toggleCheckbox.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+      toggleCheckbox.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      toggleCheckbox.widthAnchor.constraint(equalToConstant: Metrics.medium),
+      toggleCheckbox.heightAnchor.constraint(equalToConstant: Metrics.medium),
       
-      titleLabel.centerYAnchor.constraint(equalTo: checkboxButton.centerYAnchor),
-      titleLabel.leadingAnchor.constraint(equalTo: checkboxButton.trailingAnchor, constant: Metrics.small),
+      titleLabel.centerYAnchor.constraint(equalTo: toggleCheckbox.centerYAnchor),
+      titleLabel.leadingAnchor.constraint(equalTo: toggleCheckbox.trailingAnchor, constant: Metrics.small),
       titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
     ])
-  }
-  
-  public func toggle() {
-    checkboxButton.isSelected.toggle()
   }
 }

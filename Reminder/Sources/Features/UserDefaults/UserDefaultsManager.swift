@@ -11,6 +11,7 @@ class UserDefaultsManager {
   private static let userKey = "userKey"
   private static let userNameKey = "userName"
   private static let userProfileImgKey = "userProfileImg"
+  private static let onboardingSeenKey = "onboarding"
   
   //MARK: User
   static func saveUser(user: User) {
@@ -63,6 +64,21 @@ class UserDefaultsManager {
   
   static func removeUserProfileImage() {
     UserDefaults.standard.removeObject(forKey: userProfileImgKey)
+    UserDefaults.standard.synchronize()
+  }
+  
+  //MARK: Onboarding
+  static func markOnboardingSeen() {
+    UserDefaults.standard.set(true, forKey: onboardingSeenKey)
+    UserDefaults.standard.synchronize()
+  }
+  
+  static func isOnboardingSeen() -> Bool {
+    return UserDefaults.standard.bool(forKey: onboardingSeenKey)
+  }
+  
+  static func removeOnboardingSeen() {
+    UserDefaults.standard.removeObject(forKey: onboardingSeenKey)
     UserDefaults.standard.synchronize()
   }
 }
